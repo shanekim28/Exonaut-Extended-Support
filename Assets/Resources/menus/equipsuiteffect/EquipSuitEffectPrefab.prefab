@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1076725614319235}
+  m_IsPrefabParent: 1
+--- !u!1 &1076725614319235
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4382165248685471}
+  m_Layer: 0
+  m_Name: EquipSuitEffectPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4382165248685471
+Transform:
+  m_GameObject: {fileID: 1076725614319235}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.371139E-08}
+  m_LocalPosition: {x: -6.5, y: -6.25, z: 28.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4311078777869669}
+  - {fileID: 4202606766040445}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 180, y: 5.008956E-06, z: 180}
+--- !u!1 &1847524370331048
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4311078777869669}
+  - component: {fileID: 33086141230050036}
+  - component: {fileID: 23361083381861025}
+  - component: {fileID: 111613187391132122}
+  - component: {fileID: 114139483392613893}
+  m_Layer: 0
+  m_Name: equipSuitEffect_animLite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4311078777869669
+Transform:
+  m_GameObject: {fileID: 1847524370331048}
+  m_LocalRotation: {x: 0.7071066, y: 0, z: 0, w: -0.7071069}
+  m_LocalPosition: {x: 0.2965252, y: -0.5446091, z: 0.4944319}
+  m_LocalScale: {x: 70, y: 70, z: 120}
+  m_Children: []
+  m_Father: {fileID: 4382165248685471}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -89.99997, y: 0, z: 0}
+--- !u!33 &33086141230050036
+MeshFilter:
+  m_GameObject: {fileID: 1847524370331048}
+  m_Mesh: {fileID: 4300000, guid: 081c35d9093b9e34ab2f1e461302bdf5, type: 2}
+--- !u!23 &23361083381861025
+MeshRenderer:
+  m_GameObject: {fileID: 1847524370331048}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 636be969a3eb26a4fbc9d99828a30f8a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!111 &111613187391132122
+Animation:
+  m_GameObject: {fileID: 1847524370331048}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &114139483392613893
+MonoBehaviour:
+  m_GameObject: {fileID: 1847524370331048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206d39a8ce64a3d469222e555087c6c3, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+--- !u!1 &1754928135321139
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4202606766040445}
+  - component: {fileID: 33977792149497950}
+  - component: {fileID: 23620548230433607}
+  - component: {fileID: 111053118478429906}
+  - component: {fileID: 114193572740831250}
+  m_Layer: 0
+  m_Name: equipSuitEffect_animUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4202606766040445
+Transform:
+  m_GameObject: {fileID: 1754928135321139}
+  m_LocalRotation: {x: 0.7071066, y: 0, z: 0, w: -0.7071069}
+  m_LocalPosition: {x: 0.2965252, y: -0.5446091, z: 0.4944319}
+  m_LocalScale: {x: 64, y: 69.99998, z: 70}
+  m_Children: []
+  m_Father: {fileID: 4382165248685471}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -89.99997, y: 0, z: 0}
+--- !u!33 &33977792149497950
+MeshFilter:
+  m_GameObject: {fileID: 1754928135321139}
+  m_Mesh: {fileID: 4300000, guid: 081c35d9093b9e34ab2f1e461302bdf5, type: 2}
+--- !u!23 &23620548230433607
+MeshRenderer:
+  m_GameObject: {fileID: 1754928135321139}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 99765f2cb9a5a0f46b36561cf13c369d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!111 &111053118478429906
+Animation:
+  m_GameObject: {fileID: 1754928135321139}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &114193572740831250
+MonoBehaviour:
+  m_GameObject: {fileID: 1754928135321139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42738235901b41544a16ae02fb68b8dc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:

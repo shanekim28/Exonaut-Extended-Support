@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_Name: TT_Door_Flicker_Material
+  m_Shader: {fileID: 4800000, guid: 0000000deadbeef15deadf00d0000000, type: 3}
+  m_ShaderKeywords:
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 0
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: a83574650aa8c2d42a116f0c564b7a21, type: 3}
+        m_Scale: {x: 0, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _InvFade: 2.472687
+    m_Colors:
+    - _Color: {r: 0, g: 0.9626865, b: 0.9626865, a: 1}
+    - _TintColor: {r: 0.7843137, g: 0, b: 0, a: 0.03921569}

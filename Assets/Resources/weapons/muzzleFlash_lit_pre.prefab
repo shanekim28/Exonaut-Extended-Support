@@ -1,0 +1,232 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1131293230515003}
+  m_IsPrefabParent: 1
+--- !u!1 &1131293230515003
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4088635705212252}
+  - component: {fileID: 111793208208839907}
+  - component: {fileID: 114736416497590532}
+  m_Layer: 0
+  m_Name: muzzleFlash_lit_pre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4088635705212252
+Transform:
+  m_GameObject: {fileID: 1131293230515003}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.957918, y: 194.331, z: -88.70786}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4922694370261555}
+  - {fileID: 4913778032374995}
+  - {fileID: 4143310199480762}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &111793208208839907
+Animation:
+  m_GameObject: {fileID: 1131293230515003}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &114736416497590532
+MonoBehaviour:
+  m_GameObject: {fileID: 1131293230515003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2051b13effc5a614881792484597f002, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+--- !u!1 &1721129764078956
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4922694370261555}
+  - component: {fileID: 33179241905958973}
+  - component: {fileID: 23043168288788063}
+  m_Layer: 0
+  m_Name: muzzleFlashA
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4922694370261555
+Transform:
+  m_GameObject: {fileID: 1721129764078956}
+  m_LocalRotation: {x: 1.110223E-16, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.7838135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4088635705212252}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 1.272222E-14, y: 0, z: 0}
+--- !u!33 &33179241905958973
+MeshFilter:
+  m_GameObject: {fileID: 1721129764078956}
+  m_Mesh: {fileID: 4300000, guid: 33b40bfac8c76d14e8d2f8db431df715, type: 2}
+--- !u!23 &23043168288788063
+MeshRenderer:
+  m_GameObject: {fileID: 1721129764078956}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 1eb6c897a8fb4aa4885b0169dc9590fc, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!1 &1908374037460906
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4913778032374995}
+  - component: {fileID: 33661589916147427}
+  - component: {fileID: 23453711563726183}
+  m_Layer: 0
+  m_Name: muzzleFlashB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4913778032374995
+Transform:
+  m_GameObject: {fileID: 1908374037460906}
+  m_LocalRotation: {x: 1.110223E-16, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.8174744}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4088635705212252}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 1.272222E-14, y: 0, z: 0}
+--- !u!33 &33661589916147427
+MeshFilter:
+  m_GameObject: {fileID: 1908374037460906}
+  m_Mesh: {fileID: 4300000, guid: a23cd8b9897ad4d41835c544fa997fa4, type: 2}
+--- !u!23 &23453711563726183
+MeshRenderer:
+  m_GameObject: {fileID: 1908374037460906}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 1eb6c897a8fb4aa4885b0169dc9590fc, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!1 &1516337798554527
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4143310199480762}
+  - component: {fileID: 108365371806100205}
+  m_Layer: 0
+  m_Name: muzzleLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4143310199480762
+Transform:
+  m_GameObject: {fileID: 1516337798554527}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.555954}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4088635705212252}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &108365371806100205
+Light:
+  m_GameObject: {fileID: 1516337798554527}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 1, g: 0.6078432, b: 0, a: 1}
+  m_Intensity: 8
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: 0
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0
+    m_NearPlane: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 1280
+  m_Lightmapping: 1
+  m_AreaSize: {x: 0, y: 0}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 0
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0

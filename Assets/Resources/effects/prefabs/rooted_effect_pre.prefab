@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1450857551893807}
+  m_IsPrefabParent: 1
+--- !u!1 &1450857551893807
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4156381136491116}
+  m_Layer: 0
+  m_Name: rooted_effect_pre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4156381136491116
+Transform:
+  m_GameObject: {fileID: 1450857551893807}
+  m_LocalRotation: {x: 0, y: 0.7071065, z: 0, w: -0.7071072}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 89.99995, z: 0}
