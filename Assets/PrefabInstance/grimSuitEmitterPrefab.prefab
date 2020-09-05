@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1030267106376315}
+  m_IsPrefabParent: 1
+--- !u!1 &1030267106376315
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4385246434749526}
+  - component: {fileID: 114278299019865597}
+  m_Layer: 0
+  m_Name: grimSuitEmitterPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4385246434749526
+Transform:
+  m_GameObject: {fileID: 1030267106376315}
+  m_LocalRotation: {x: 0, y: -8.742278E-08, z: 0, w: -1}
+  m_LocalPosition: {x: -1.528859, y: 1.390849, z: -8.929743}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -1.001791E-05, z: 0}
+--- !u!114 &114278299019865597
+MonoBehaviour:
+  m_GameObject: {fileID: 1030267106376315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec116fdd2b865c34786330cdf228a760, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:

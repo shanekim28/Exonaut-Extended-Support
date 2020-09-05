@@ -34,6 +34,7 @@ public class NetworkManager : MonoBehaviour
 
 	private string loginErrorMessage = string.Empty;
 
+	[SerializeField]
 	private STATE m_state;
 
 	private Factions m_faction;
@@ -57,6 +58,8 @@ public class NetworkManager : MonoBehaviour
 	private ServerMode mServerMode;
 
 	public UrlLocator urlLocator;
+
+	public GameObject urlLocatorPrefab;
 
 	public bool m_serviceSet;
 
@@ -95,8 +98,8 @@ public class NetworkManager : MonoBehaviour
 
 	public void AskDirector()
 	{
-		GameObject gameObject = UnityEngine.Object.Instantiate(Resources.Load("Locator")) as GameObject;
-		urlLocator = (gameObject.GetComponent("UrlLocator") as UrlLocator);
+		GameObject gameObject = Instantiate(Resources.Load("Locator")) as GameObject;
+		urlLocator = (gameObject.GetComponent<UrlLocator>() as UrlLocator);
 		gameObject.SendMessage("LoadProps");
 		Logger.trace("[NetworkManager::AskDirector]");
 		m_state = WaitUntilHaveServer;
@@ -141,7 +144,7 @@ public class NetworkManager : MonoBehaviour
 		}
 		else
 		{
-			bool debug = false;
+			bool debug = true;
 			Debug.Log("<< initializing smartfox");
 			smartFox = new SmartFox(debug);
 		}

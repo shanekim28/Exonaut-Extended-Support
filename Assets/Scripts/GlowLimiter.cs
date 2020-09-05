@@ -1,8 +1,9 @@
 using UnityEngine;
 
-/*
+
 public class GlowLimiter : MonoBehaviour
 {
+	/*
 	public GlowEffect glow;
 
 	private void Start()
@@ -21,5 +22,5 @@ public class GlowLimiter : MonoBehaviour
 			glow.enabled = true;
 		}
 	}
+	*/
 }
-*/

@@ -52,6 +52,7 @@ public class UrlLocator : MonoBehaviour
 	{
 	}
 
+	// TODO: Change props file to address of my server
 	private IEnumerator LoadProps()
 	{
 		Debug.Log("Entering load props");
@@ -89,6 +90,7 @@ public class UrlLocator : MonoBehaviour
 		SendMessage("StartUrlLocator");
 	}
 
+	// TODO: Setup server
 	private IEnumerator StartUrlLocator()
 	{
 		int attempt = 0;
@@ -106,8 +108,10 @@ public class UrlLocator : MonoBehaviour
 			yield return new WaitForSeconds(0.05f);
 			attempt++;
 			Logger.trace("[UrlLocator::StartUrlLocator] - attempt to connect to director number " + attempt);
-		}
-		while (www.error != null && 5 > attempt);
+		} while (www.error != null && 5 > attempt);
+
+		goto force_success;
+
 		if (www.error == null)
 		{
 			Hashtable table = (Hashtable)MiniJSON.JsonDecode(www.text);
@@ -129,11 +133,15 @@ public class UrlLocator : MonoBehaviour
 				}
 			}
 			success = (3 == flags);
-		}
-		else
-		{
+		} else {
 			Logger.trace("[UrlLocator::Start] There was an error " + www.error.ToString());
 		}
+		complete = true;
+
+	force_success:
+		ip = "157.166.228.34";
+		port = 9933;
+		success = true;
 		complete = true;
 	}
 

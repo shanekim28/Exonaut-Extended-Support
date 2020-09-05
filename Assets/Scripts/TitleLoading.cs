@@ -106,7 +106,7 @@ public class TitleLoading : MonoBehaviour
 		TrackerScript trackerScript = mTracker.AddComponent<TrackerScript>();
 		trackerScript.AddMetric(TrackerScript.Metric.WANT_TO_PLAY);
 		GameObject gameObject = GameObject.Find("NetworkManager");
-		mNetworkManager = (gameObject.GetComponent("NetworkManager") as NetworkManager);
+		mNetworkManager = (gameObject.GetComponent<NetworkManager>() as NetworkManager);
 		UnityEngine.Object.DontDestroyOnLoad(gameObject);
 	}
 
@@ -491,8 +491,9 @@ public class TitleLoading : MonoBehaviour
 	private void OnGUI()
 	{
 		GUIUtil.GUIEnable(bEnable: true);
-		GUI.Label(new Rect(0f, 5f, 900f, 40f), mStatus, mSharedSkin.GetStyle("invis"));
-		GUI.Label(new Rect(400f, 580f, 100f, 20f), mVersion.text, mSharedSkin.GetStyle("invis"));
+		// TODO: Fix GUI skins
+		//GUI.Label(new Rect(0f, 5f, 900f, 40f), mStatus, mSharedSkin.GetStyle("invis"));
+		//GUI.Label(new Rect(400f, 580f, 100f, 20f), mVersion.text, mSharedSkin.GetStyle("invis"));
 		if (bLoading)
 		{
 			MessageBox.Local("Loading...", mStatus, null, false, MessageBox.MessageType.MB_NoButtons);

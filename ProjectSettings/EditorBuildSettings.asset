@@ -2,23 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1045 &1
 EditorBuildSettings:
+  m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TitleLoading.unity
+    path: Assets/Scene/Scenes/TitleLoading.unity
     guid: c479d4e43472cfc4ca1b527e4d590bf1
   - enabled: 1
-    path: Assets/Scenes/FactionSelection.unity
+    path: Assets/Scene/Scenes/FactionSelection.unity
     guid: f750d4e5c3ac7174099224357df1d5f0
   - enabled: 1
-    path: Assets/Scenes/GameHome.unity
+    path: Assets/Scene/Scenes/GameHome.unity
     guid: 0be9f2c046aa5794cacb7bebc4199c73
   - enabled: 1
-    path: Assets/Scenes/GameBattleQueue.unity
+    path: Assets/Scene/Scenes/GameBattleQueue.unity
     guid: 0a654569a4a7e844f85e26d0c59bd461
   - enabled: 1
-    path: Assets/Scenes/GamePlay.unity
+    path: Assets/Scene/Scenes/GamePlay.unity
     guid: 1af9a448ebf0de94c91d440bb53b868b
   - enabled: 1
-    path: Assets/Scenes/TutorialGamePlay.unity
+    path: Assets/Scene/Scenes/TutorialGamePlay.unity
     guid: c12b84535ed6c5648a1906060dc75f9a

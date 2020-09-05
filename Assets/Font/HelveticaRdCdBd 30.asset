@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!128 &12800000
+Font:
+  m_Name: HelveticaRdCdBd 30
+  serializedVersion: 5
+  m_LineSpacing: 15.78
+  m_DefaultMaterial: {fileID: 2100000, guid: 9ca32cb1755cc404184e1f03cf7897be, type: 2}
+  m_FontSize: 0
+  m_Texture: {fileID: 2800000, guid: 1f955d4ba86e89649a15468db39a770e, type: 3}
+  m_AsciiStartOffset: 0
+  m_Tracking: 1
+  m_CharacterSpacing: 0
+  m_CharacterPadding: 1
+  m_ConvertCase: -1
+  m_CharacterRects: []
+  m_KerningValues: {}
+  m_PixelScale: 0.1
+  m_FontData:
+  m_Ascent: 21.99
+  m_Descent: 0
+  m_DefaultStyle: 0
+  m_FontNames: []
+  m_FallbackFonts: []
+  m_FontRenderingMode: 0
+  m_UseLegacyBoundsCalculation: 0
+  m_ShouldRoundAdvanceValue: 1

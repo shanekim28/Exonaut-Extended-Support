@@ -1,0 +1,241 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1299737919466727}
+  m_IsPrefabParent: 1
+--- !u!1 &1299737919466727
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4177210542976851}
+  - component: {fileID: 114926857761990563}
+  m_Layer: 0
+  m_Name: rocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4177210542976851
+Transform:
+  m_GameObject: {fileID: 1299737919466727}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.706951, z: 0}
+  m_LocalScale: {x: 2, y: 5, z: 2}
+  m_Children:
+  - {fileID: 4541186290978787}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114926857761990563
+MonoBehaviour:
+  m_GameObject: {fileID: 1299737919466727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86422ff3e6207bf4e9c7ed0d1e6dd110, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+--- !u!1 &1866860019451502
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4541186290978787}
+  - component: {fileID: 33811379062930757}
+  - component: {fileID: 23613738688191837}
+  - component: {fileID: 111874527696148142}
+  m_Layer: 0
+  m_Name: projectile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4541186290978787
+Transform:
+  m_GameObject: {fileID: 1866860019451502}
+  m_LocalRotation: {x: 0.7071066, y: 0, z: 0, w: -0.7071069}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4283683731833739}
+  m_Father: {fileID: 4177210542976851}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -89.99997, y: 0, z: 0}
+--- !u!33 &33811379062930757
+MeshFilter:
+  m_GameObject: {fileID: 1866860019451502}
+  m_Mesh: {fileID: 4300000, guid: 29d3b5d5134036944b77e4d98b26e1b3, type: 2}
+--- !u!23 &23613738688191837
+MeshRenderer:
+  m_GameObject: {fileID: 1866860019451502}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 422acd101b7b79943b6b7fa30414424a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!111 &111874527696148142
+Animation:
+  m_GameObject: {fileID: 1866860019451502}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!1 &1528049982670838
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4283683731833739}
+  m_Layer: 0
+  m_Name: center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4283683731833739
+Transform:
+  m_GameObject: {fileID: 1528049982670838}
+  m_LocalRotation: {x: -0.003651898, y: 0.8056174, z: 0.5924041, w: 0.004966258}
+  m_LocalPosition: {x: 0.2177991, y: 2.663926, z: -2.562408}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4434829361121965}
+  - {fileID: 4346354468256370}
+  - {fileID: 4825170458336088}
+  m_Father: {fileID: 4541186290978787}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 107.3428, y: -0.706395, z: 180}
+--- !u!1 &1142934885462028
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4434829361121965}
+  m_Layer: 0
+  m_Name: jetCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4434829361121965
+Transform:
+  m_GameObject: {fileID: 1142934885462028}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2186178, y: 1.502949, z: -3.199119}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4283683731833739}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1875908565162411
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4346354468256370}
+  - component: {fileID: 108828220057813773}
+  m_Layer: 0
+  m_Name: jetLite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4346354468256370
+Transform:
+  m_GameObject: {fileID: 1875908565162411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3898595, y: 1.560691, z: -0.937885}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4283683731833739}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &108828220057813773
+Light:
+  m_GameObject: {fileID: 1875908565162411}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0.8823529, g: 0.6039216, b: 0.09019608, a: 1}
+  m_Intensity: 3
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 60
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: 0
+    m_Strength: 0.8
+    m_Bias: 0.05
+    m_NormalBias: 0
+    m_NearPlane: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_AreaSize: {x: 0, y: 0}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 0
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!1 &1378532038694681
+GameObject:
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4825170458336088}
+  m_Layer: 0
+  m_Name: jetSmoke
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4825170458336088
+Transform:
+  m_GameObject: {fileID: 1378532038694681}
+  m_LocalRotation: {x: -0.9873604, y: 0.003653507, z: -0.0181959, w: -0.1574011}
+  m_LocalPosition: {x: 0.4511507, y: 1.05806, z: -2.90241}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4283683731833739}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 161.8863, y: 2.125127, z: 0.08523149}
