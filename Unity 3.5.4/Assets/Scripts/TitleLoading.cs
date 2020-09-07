@@ -77,6 +77,7 @@ public class TitleLoading : MonoBehaviour
 
 	public Texture2D StoryExoSymbol;
 
+	// TODO: Set resolution
 	public Rect StoryBGRect;
 
 	public Rect StoryTextBGRect;
@@ -191,14 +192,16 @@ public class TitleLoading : MonoBehaviour
 	{
 		if (!mBundleIsLoading)
 		{
-			Logger.trace("<< mCurrentBundle " + mCurrentBundle + "  " + mLoadBundleList.Length);
+			Logger.trace("<< mCurrentBundle " + mCurrentBundle + " out of " + mLoadBundleList.Length);
 			if (mCurrentBundle < mLoadBundleList.Length)
 			{
+				Logger.traceAlways("Loading bundle");
 				mLoadBundleList[mCurrentBundle]();
 				mCurrentBundle++;
 			}
 			else
 			{
+				Logger.traceAlways("Checking login");
 				checkLogin();
 			}
 		}
@@ -793,6 +796,7 @@ public class TitleLoading : MonoBehaviour
 
 	private void LoadWeapons()
 	{
+		Debug.LogError("Loading Weapons");
 		mStatus = "Loading Weapons . . .";
 		mBundleIsLoading = true;
 		string url = GameData.BUNDLE_PATH + "weapons/weaponsBundle.unity3d";
@@ -878,7 +882,8 @@ public class TitleLoading : MonoBehaviour
 		mStatus = "Loading Suits . . .";
 		mBundleIsLoading = true;
 		string text = null;
-		text = ((!Application.isEditor) ? (GameData.BUNDLE_PATH + "suits/low_suits.unity3d") : ("file://" + Application.dataPath + "/low_suits.unity3d"));
+		//text = ((!Application.isEditor) ? (GameData.BUNDLE_PATH + "suits/low_suits.unity3d") : ("file://" + Application.dataPath + "/low_suits.unity3d"));
+		text = GameData.BUNDLE_PATH + "suits/low_suits.unity3d";
 		WWW www = new WWW(text);
 		StartCoroutine(WaitForLowSuitsRequest(www));
 	}
@@ -1166,7 +1171,7 @@ public class TitleLoading : MonoBehaviour
 		string b = (Event.current.type != EventType.Repaint) ? lastHover : string.Empty;
 		GUI.DrawTexture(StoryBGRect, StoryBG);
 		GUI.color = new Color(1f, 1f, 1f, Mathf.Max(1f - StoryTimer * 2f, 0f));
-		GUI.Box(StoryBGRect, GUIContent.none, mSharedSkin.GetStyle("blackbox"));
+		//GUI.Box(StoryBGRect, GUIContent.none, mSharedSkin.GetStyle("blackbox"));
 		GUI.color = new Color(1f, 1f, 1f, StoryTimer - 1.5f);
 		Rect storyTextBGRect = StoryTextBGRect;
 		float width = storyTextBGRect.width;
@@ -1200,7 +1205,8 @@ public class TitleLoading : MonoBehaviour
 			GUI.color = new Color(1f, 1f, 1f, Mathf.Min(1f, StoryTimer - 6.5f));
 			if (bIsGuest)
 			{
-				switch (GUIUtil.Button(new Rect(290f, 475f, 135f, 60f), "PLAY AS GUEST", mSharedSkin.GetStyle("DarkButton")))
+				//switch (GUIUtil.Button(new Rect(290f, 475f, 135f, 60f), "PLAY AS GUEST", mSharedSkin.GetStyle("DarkButton")))
+				switch (GUIUtil.Button(new Rect(290f, 475f, 135f, 60f), "PLAY AS GUEST"))
 				{
 				case GUIUtil.GUIState.Hover:
 				case GUIUtil.GUIState.Active:
@@ -1237,7 +1243,8 @@ public class TitleLoading : MonoBehaviour
 					break;
 				}
 				}
-				switch (GUIUtil.Button(new Rect(475f, 475f, 135f, 60f), "LOGIN", mSharedSkin.GetStyle("DarkButton")))
+				//switch (GUIUtil.Button(new Rect(475f, 475f, 135f, 60f), "LOGIN", mSharedSkin.GetStyle("DarkButton")))
+				switch (GUIUtil.Button(new Rect(475f, 475f, 135f, 60f), "LOGIN"))
 				{
 				case GUIUtil.GUIState.Hover:
 				case GUIUtil.GUIState.Active:

@@ -106,7 +106,8 @@ public class MessageBox
 		mMessageBox.mType = Type;
 		GUIUtil.OnDrawWindow();
 		GUIUtil.GUIEnableOverride(bEnable: true);
-		mMessageBox.mWindowPosition = GUI.Window(1000, mMessageBox.mWindowPosition, DoWindow, Title, GUIUtil.mInstance.mSharedSkin.window);
+		mMessageBox.mWindowPosition = GUI.Window(1000, mMessageBox.mWindowPosition, DoWindow, Title);
+		//mMessageBox.mWindowPosition = GUI.Window(1000, mMessageBox.mWindowPosition, DoWindow, Title, GUIUtil.mInstance.mSharedSkin.window);
 		GUI.BringWindowToFront(1000);
 		GUIUtil.GUIEnableOverride(bEnable: false);
 		return mMessageBox.mReturn;

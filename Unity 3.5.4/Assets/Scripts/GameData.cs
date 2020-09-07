@@ -253,7 +253,9 @@ public class GameData
 
 	public static string SERVER_PATH = "http://cn-internal/games/exonaut";
 
-	public static string BUNDLE_PATH = "http://cn-internal/games/exonaut/";
+	// TODO: replace with server bundle path
+	//public static string BUNDLE_PATH = "http://cn-internal/games/exonaut/";
+	public static string BUNDLE_PATH = "file://" + Application.dataPath + "/Resources/gameresources/";
 
 	public static string SERVICE_PATH_WITH_PORT = string.Empty;
 
