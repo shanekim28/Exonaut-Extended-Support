@@ -4,7 +4,7 @@
 
 This git repository contains the decompiled source code from Cartoon Network's **Project Exonaut**. The Unity project you see before you is an attempt to restore Project Exonaut to its working state after it was discontinued in 2014. 
 
-As of September 4, 2020, this Unity project is *NOT* functional. All compiler errors have been fixed, but a lot of reverse engineering still needs to get done before the game works in the editor. Scripts are missing from every GameObject and servers do not exist.
+As of September 17, 2020, this Unity project is *BARELY* functional. All compiler errors have been fixed, but a lot of reverse engineering still needs to get done before the game works in the editor. Some scenes have been recreated, but others are still missing prefabs, materials, and particle systems.
 
 ## Is the game playable?
 
@@ -20,8 +20,10 @@ Yes, yes, a thousand times, yes! Open an issue and I'll tell you directly how yo
 
 ## Technical info for nerds
 
-The original Project Exonaut game was made in Unity3D. It's unclear exactly which version, but I'm guessing it's version 3.5, but to get the project working in Unity, I had to upgrade it to version 5.6. The game is originally written using .NET Framework 2.0 (C# 4.0), but again, for compatibility reasons, this had to be updated. The game uses SmartFox as its server and client system.
+The original Project Exonaut game was made in Unity3D. According to asset browsers, the project was made between versions 3.2 and 3.5.4. The game is originally written using .NET Framework 2.0 (C# 4.0). The game uses SmartFox Server 2X as its server and client system.
 
-## Website
+## Websites
 
 Check out the [Exonaut Extended Support Wiki](https://projectexonaut.fandom.com/wiki/Exonaut_Extended_Support)
+
+Check out my [Trello Roadmap](https://trello.com/b/FNR3Bluo/exonaut-extended-support)
