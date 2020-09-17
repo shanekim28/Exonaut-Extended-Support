@@ -3,8 +3,7 @@ using System.Collections;
 using System.Xml;
 using UnityEngine;
 
-public class GameHome : MonoBehaviour
-{
+public class GameHome : MonoBehaviour {
 	private delegate void STATE();
 
 	private const float TransitionLength = 0.5f;
@@ -123,6 +122,10 @@ public class GameHome : MonoBehaviour
 
 	public Texture2D avatarTexture;
 
+	/// <summary>
+	/// Ranges from 0 to 3 based on which faction and NavState it is.
+	/// Banzai is 0, 1 and Atlas is 2, 3
+	/// </summary>
 	public Texture2D[] NavStateImg;
 
 	public Texture2D Border;
@@ -153,10 +156,13 @@ public class GameHome : MonoBehaviour
 
 	private string lastHover = string.Empty;
 
+	[SerializeField]
 	private string curhover = string.Empty;
 
+	[SerializeField]
 	private string lastHover2 = string.Empty;
 
+	[SerializeField]
 	private string curhover2 = string.Empty;
 
 	public static Rect ScreenSpace {
@@ -165,17 +171,14 @@ public class GameHome : MonoBehaviour
 		}
 	}
 
-	private void Awake()
-	{
-		if (Application.isEditor)
-		{
+	private void Awake() {
+		if (Application.isEditor) {
 			GameData.MATCH_MODE = GameData.Build.DEBUG;
 		}
-		if (GameData.MyPlayStatus > 1)
-		{
+		if (GameData.MyPlayStatus > 1) {
 			getMissionInProgressUpdate();
 		}
-		GL.ClearWithSkybox( true, Camera.main);
+		GL.ClearWithSkybox(true, Camera.main);
 		GameObject gameObject = GameObject.Find("Tracker");
 		TrackerScript trackerScript = gameObject.GetComponent("TrackerScript") as TrackerScript;
 		trackerScript.AddMetric(TrackerScript.Metric.IN_HANGAR);
@@ -184,40 +187,35 @@ public class GameHome : MonoBehaviour
 		m_networkManager = (gameObject2.GetComponent("NetworkManager") as NetworkManager);
 		m_state = Home;
 		Camera.main.renderingPath = RenderingPath.UsePlayerSettings;
-		if (GameData.eventObjects.ContainsKey("platform"))
-		{
+		if (GameData.eventObjects.ContainsKey("platform")) {
 			GameObject gameObject3 = Object.Instantiate(GameData.eventObjects["platform"] as GameObject) as GameObject;
 			GUIUtil.mInstance.mBackground = gameObject3.transform;
 		}
 	}
 
-	private void Start()
-	{
+	private void Start() {
 		QualitySettings.currentLevel = (QualityLevel)(3 + GameData.mGameSettings.mGraphicsLevel);
 		DynamicOptions.bDrawCursor = true;
 		GameData.IsChooserActive = true;
 		GameObject gameObject = GameObject.Find("DynamicOptions");
-		if (gameObject != null)
-		{
+
+		if (gameObject != null) {
+			Debug.Log("DynamicOptions GameObject found!");
 			DynamicOptions dynamicOptions = gameObject.GetComponent("DynamicOptions") as DynamicOptions;
 			dynamicOptions.bCanFullscreen = true;
-		}
-		if (GameObject.Find("GameMusic(Clone)") == null)
-		{
-			if (GameData.DoesEventExist("GameHome_MusicLoop"))
-			{
+		} 
+
+		if (GameObject.Find("GameMusic(Clone)") == null) {
+			if (GameData.DoesEventExist("GameHome_MusicLoop")) {
 				GameMusic.GetComponent<AudioSource>().clip = (GameData.eventObjects["GameHome_MusicLoop"] as AudioClip);
 			}
 			GameMusic = (Object.Instantiate(GameMusic) as GameObject);
 			GameMusic.GetComponent<AudioSource>().volume = GameData.mGameSettings.mMusicVolume;
-		}
-		else
-		{
+		} else {
 			GameMusic = GameObject.Find("GameMusic(Clone)");
 			GameMusic.GetComponent<AudioSource>().volume = GameData.mGameSettings.mMusicVolume;
 		}
-		if (GameData.MasterSuitList.Count == 0)
-		{
+		if (GameData.MasterSuitList.Count == 0) {
 			GameData.InitSuitList(string.Empty);
 		}
 		ModelTransforms = new Transform[4];
@@ -225,133 +223,118 @@ public class GameHome : MonoBehaviour
 		ModelTransforms[1] = GUIUtil.mInstance.mBackground;
 		ModelTransforms[2] = GUIUtil.mInstance.mSuitEffect;
 		ModelTransforms[3] = GameObject.CreatePrimitive(PrimitiveType.Plane).transform;
+
+		for (int i = 0; i < ModelTransforms.Length; i++) {
+			if (ModelTransforms[i] == null) {
+				Debug.LogError(string.Format("Model Transforms {0} is null!", i));
+            }
+        }
 		tabhome = new TabHome(this);
 		tabshowcase = new TabShowcase(this);
 		mSharedSkin = GUIUtil.mInstance.mSharedSkin;
 		StartCoroutine(UpdateScreenSpace());
 		CheckTutorial(bOverride: false);
 		HolidayEvent.CreateEvent(out m_LoadHolidayEvent, out m_UpdateHolidayEvent, out m_DrawHolidayEvent);
-		if (m_LoadHolidayEvent != null)
-		{
+		if (m_LoadHolidayEvent != null) {
 			m_LoadHolidayEvent();
 		}
 	}
 
-	public void onSFSMessage(string msg)
-	{
+	public void onSFSMessage(string msg) {
 		Logger.trace(this + " RECEIVED MESSAGE " + msg);
 	}
 
-	private void Update()
-	{
+	private void Update() {
 		UpdateModelPositions();
 		m_state();
-		if (m_UpdateHolidayEvent != null)
-		{
+		if (m_UpdateHolidayEvent != null) {
 			m_UpdateHolidayEvent();
 		}
-		if (GameData.MATCH_MODE == GameData.Build.PRODUCTION && !Application.dataPath.Contains("cn-internal"))
-		{
+		if (GameData.MATCH_MODE == GameData.Build.PRODUCTION && !Application.dataPath.Contains("cn-internal")) {
 			return;
 		}
-		if (!m_isLogin)
-		{
-			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.L))
-			{
+		if (!m_isLogin) {
+			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.L)) {
 				Debug.Log("Bring up Login");
 				m_isLogin = true;
 			}
-		}
-		else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.L))
-		{
+		} else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.L)) {
 			Debug.Log("Remove Login");
 			m_isLogin = false;
 		}
 	}
 
-	private void Home()
-	{
-		if (SuitEffectTimer > 0f)
-		{
+	/// <summary>
+	/// Called on awake
+	/// </summary>
+	private void Home() {
+		if (SuitEffectTimer > 0f) {
 			SuitEffectTimer -= Time.deltaTime;
-			if (SuitEffectTimer <= 0f)
-			{
+			if (SuitEffectTimer <= 0f) {
 				SuitEffectTimer = 0f;
 				ModelTransforms[2].gameObject.SetActiveRecursively(state: false);
 				ModelTransforms[2] = null;
-			}
-			else
-			{
+			} else {
 				ModelTransforms[2] = GUIUtil.mInstance.mSuitEffect;
 				ModelTransforms[2].gameObject.SetActiveRecursively(state: true);
 				ModelTransforms[1].gameObject.SetActiveRecursively(state: true);
 			}
 		}
-		if (TransitionTimer > 0f)
-		{
+		if (TransitionTimer > 0f) {
 			TransitionTimer -= Time.deltaTime;
 			float num = 0.25f;
 			NavIndicator = Mathf.Lerp(0f, 60f, Mathf.Abs(TransitionTimer - num) / num);
 			FlagPos = Mathf.Lerp(FlagPositions[LastState] * screenSpace.width, FlagPositions[TargetState] * screenSpace.width, 1f - 2f * TransitionTimer);
-			if (TransitionTimer < 0.25f)
-			{
+			if (TransitionTimer < 0.25f) {
 				NavState = TargetState;
 			}
-			if (TransitionTimer <= 0f)
-			{
+			if (TransitionTimer <= 0f) {
 				TransitionTimer = 0f;
 			}
 		}
-		if (bFullScreen != Screen.fullScreen || lastScreenWidth != (float)Screen.width || lastScreenHeight != (float)Screen.height)
-		{
+		if (bFullScreen != Screen.fullScreen || lastScreenWidth != (float)Screen.width || lastScreenHeight != (float)Screen.height) {
 			StartCoroutine(UpdateScreenSpace());
 		}
 	}
 
-	private void Connect()
-	{
+	/// <summary>
+	/// Called when battle button is pressed
+	/// </summary>
+	private void Connect() {
 		Logger.traceAlways("<< Connect... ");
 		m_connected = true;
-		if (!m_networkManager.isConnected())
-		{
+		if (!m_networkManager.isConnected()) {
 			Debug.Log("<< Not connected so reconnect ");
 			m_networkManager.Connect();
 		}
 		m_state = Login;
 	}
 
-	private void Login()
-	{
-		if (m_networkManager.isConnected())
-		{
+	private void Login() {
+		if (m_networkManager.isConnected()) {
 			m_networkManager.Login();
 			m_state = GotoQueue;
 		}
 	}
 
-	private void GotoQueue()
-	{
-		if (!m_networkManager.isLoggedIn())
-		{
+	private void GotoQueue() {
+		if (!m_networkManager.isLoggedIn()) {
 			Debug.Log("<< not logged in");
 		}
-		if (m_networkManager.isLoggedIn() && m_networkManager.isInRoom())
-		{
+		if (m_networkManager.isLoggedIn() && m_networkManager.isInRoom()) {
 			Application.LoadLevel("GameBattleQueue");
 			ModelTransforms[1].gameObject.SetActiveRecursively(state: false);
 		}
 		Debug.Log("<< want to goto Queue");
 	}
 
-	private void BuildFactoinFlag()
-	{
+	private void BuildFactoinFlag() {
 		mGeneratedBanner = new Texture2D(180, (int)screenSpace.height, TextureFormat.ARGB32, mipmap: false);
 		mGeneratedBanner.filterMode = FilterMode.Trilinear;
 		mGeneratedBanner.wrapMode = TextureWrapMode.Clamp;
 		Color[] pixels = mGeneratedBanner.GetPixels();
 		Color color = (GameData.MyFactionId != 1) ? new Color(0.2f, 0.2f, 0.1f) : new Color(0.26f, 0.0600000024f, 0.0600000024f);
-		for (int i = 0; i < pixels.Length; i++)
-		{
+		for (int i = 0; i < pixels.Length; i++) {
 			int num = i / mGeneratedBanner.width;
 			pixels[i] = color;
 			pixels[i].a = Mathf.Lerp(0.3f, 0.9f, (float)num / (float)mGeneratedBanner.height);
@@ -370,19 +353,15 @@ public class GameHome : MonoBehaviour
 		};
 		float num2 = 0f;
 		int[] array2 = array;
-		foreach (int num3 in array2)
-		{
-			if (num3 != -1)
-			{
+		foreach (int num3 in array2) {
+			if (num3 != -1) {
 				num2 += mLevelTextSizes[num3].y;
 			}
 		}
 		float num4 = ((float)mGeneratedBanner.width - num2) / 2f;
 		int[] array3 = array;
-		foreach (int num5 in array3)
-		{
-			if (num5 != -1)
-			{
+		foreach (int num5 in array3) {
+			if (num5 != -1) {
 				CustomBlit(mLevelText, mGeneratedBanner, new Rect(mLevelTextSizes[num5].x, 0f, mLevelTextSizes[num5].y, mLevelText.height), new Vector2(num4, 50f), Color.black);
 				num4 += mLevelTextSizes[num5].y;
 			}
@@ -402,13 +381,11 @@ public class GameHome : MonoBehaviour
 		Camera.main.transform.rotation = rotation;
 	}
 
-	private void CustomBlit(Texture2D SrcImg, Texture2D DestImg, Rect SrcPos, Vector2 DestPos, Color SrcColorMod)
-	{
+	private void CustomBlit(Texture2D SrcImg, Texture2D DestImg, Rect SrcPos, Vector2 DestPos, Color SrcColorMod) {
 		Color[] pixels = SrcImg.GetPixels((int)SrcPos.x, (int)SrcPos.y, (int)SrcPos.width, (int)SrcPos.height);
 		int y = (int)((float)DestImg.height - DestPos.y - SrcPos.height);
 		Color[] pixels2 = DestImg.GetPixels((int)DestPos.x, y, (int)SrcPos.width, (int)SrcPos.height);
-		for (int i = 0; i < pixels2.Length; i++)
-		{
+		for (int i = 0; i < pixels2.Length; i++) {
 			Color color = pixels[i];
 			pixels2[i].r = Mathf.Lerp(pixels2[i].r, color.r * SrcColorMod.r, color.a);
 			pixels2[i].g = Mathf.Lerp(pixels2[i].g, color.g * SrcColorMod.g, color.a);
@@ -419,29 +396,23 @@ public class GameHome : MonoBehaviour
 		DestImg.Apply();
 	}
 
-	public IEnumerator UpdateScreenSpace()
-	{
+	public IEnumerator UpdateScreenSpace() {
 		yield return new WaitForEndOfFrame();
 		bFullScreen = Screen.fullScreen;
 		lastScreenWidth = Screen.width;
 		lastScreenHeight = Screen.height;
 		float ar = (float)Screen.width / (float)Screen.height;
 		float variance = ar / 1.5f;
-		if (variance > 1f)
-		{
+		if (variance > 1f) {
 			variance = 1f / variance;
 			screenSpace = new Rect((int)((1f - variance) / 2f * (float)Screen.width), 0f, (int)((float)Screen.width - (1f - variance) * (float)Screen.width), Screen.height);
 			BlackBox1 = new Rect(0f, 0f, screenSpace.x, Screen.height);
 			BlackBox2 = new Rect(screenSpace.x + screenSpace.width, 0f, screenSpace.x, Screen.height);
-		}
-		else if (variance < 1f)
-		{
+		} else if (variance < 1f) {
 			screenSpace = new Rect(0f, (int)((1f - variance) / 2f * (float)Screen.height), Screen.width, (int)((float)Screen.height - (1f - variance) * (float)Screen.height));
 			BlackBox1 = new Rect(0f, 0f, Screen.width, screenSpace.y);
 			BlackBox2 = new Rect(0f, screenSpace.y + screenSpace.height, Screen.width, screenSpace.y + screenSpace.height);
-		}
-		else
-		{
+		} else {
 			screenSpace = new Rect(0f, 0f, Screen.width, Screen.height);
 			BlackBox1 = default(Rect);
 			BlackBox2 = default(Rect);
@@ -454,66 +425,52 @@ public class GameHome : MonoBehaviour
 		BuildFactoinFlag();
 	}
 
-	private void FixedUpdate()
-	{
+	private void FixedUpdate() {
 	}
 
-	public void SetSuitTransform(Transform trans)
-	{
-		if (mCurrentSuit != trans)
-		{
-			if (ModelTransforms[0] != null)
-			{
+	public void SetSuitTransform(Transform trans) {
+		if (mCurrentSuit != trans) {
+			if (ModelTransforms[0] != null) {
 				Object.DestroyImmediate(ModelTransforms[0].gameObject);
 				ModelTransforms[0] = null;
 			}
 			PlaySuitEffect(0.5f);
 			mCurrentSuit = trans;
-			if (mCurrentSuit != null)
-			{
+			if (mCurrentSuit != null) {
 				ModelTransforms[0] = (Object.Instantiate(mCurrentSuit, Vector3.zero, Quaternion.identity) as Transform);
 			}
 		}
 	}
 
-	public void PlaySuitEffect(float Time)
-	{
+	public void PlaySuitEffect(float Time) {
 		SuitEffectTimer = Time;
 	}
 
-	private void DoTransition(int Nav)
-	{
-		if (Nav != NavState && Nav != TargetState)
-		{
+	private void DoTransition(int Nav) {
+		if (Nav != NavState && Nav != TargetState) {
 			LastState = NavState;
 			TransitionTimer = 0.5f;
 			TargetState = Nav;
 		}
 	}
 
-	private void UpdateModelPositions()
-	{
+	private void UpdateModelPositions() {
 		Vector3[] array = (Vector3[])tabshowcase.mSuitInspector.ModelPositions.Clone();
-		for (int i = 0; i < array.Length; i++)
-		{
+		for (int i = 0; i < array.Length; i++) {
 			array[i] += tabshowcase.mSuitInspector.mCameraOffset;
 		}
 		Vector3[] array2 = new Vector3[ModelTransforms.Length];
 		Vector3[] array3 = new Vector3[ModelTransforms.Length];
-		for (int j = 0; j < tabhome.ModelPositions.Length; j++)
-		{
+		for (int j = 0; j < tabhome.ModelPositions.Length; j++) {
 			float t = Mathf.Abs((float)((TargetState == 1) ? 1 : 0) - 2f * TransitionTimer);
 			array2[j] = Vector3.Lerp(tabhome.ModelPositions[j], array[j], t);
 			array3[j] = Vector3.Lerp(tabhome.ModelRotations[j], tabshowcase.mSuitInspector.ModelRotations[j], t);
 		}
-		if (array2.Length != array3.Length && array3.Length != ModelTransforms.Length)
-		{
+		if (array2.Length != array3.Length && array3.Length != ModelTransforms.Length) {
 			return;
 		}
-		for (int k = 0; k < ModelTransforms.Length; k++)
-		{
-			if (ModelTransforms[k] != null)
-			{
+		for (int k = 0; k < ModelTransforms.Length; k++) {
+			if (ModelTransforms[k] != null) {
 				ModelTransforms[k].parent = Camera.main.transform;
 				ModelTransforms[k].transform.localPosition = array2[k];
 				ModelTransforms[k].transform.localRotation = Quaternion.Euler(array3[k]);
@@ -522,304 +479,267 @@ public class GameHome : MonoBehaviour
 		}
 	}
 
-	private void OnGUI()
-	{
+	private void OnGUI() {
 		curhover = ((Event.current.type != EventType.Repaint) ? lastHover : string.Empty);
 		GUIUtil.GUIEnabled = true;
+
 		GUI.BeginGroup(new Rect(screenSpace.x, screenSpace.y, 100000f, 200000f));
 		GUI.skin = mSharedSkin;
 		GUI.depth = 5;
 		string str = (GameData.MyPlayStatus <= 1) ? "Guest " : string.Empty;
 		str = str + " " + GameData.getFactionDisplayName(GameData.MyFactionId);
-		GUIUtil.mInstance.mModelRenderer.transform.rotation = Quaternion.identity;
-		switch (NavState)
-		{
-		case 0:
-			SetSuitTransform(tabhome.ModelTransform);
-			tabhome.showTab(screenSpace);
-			break;
-		case 1:
-			SetSuitTransform(tabshowcase.mSuitInspector.ModelTransforms[0]);
-			tabshowcase.showTab(screenSpace);
-			break;
+		// Temporary disable
+		// GUIUtil.mInstance.mModelRenderer.transform.rotation = Quaternion.identity; 
+		switch (NavState) {
+			case 0:
+				SetSuitTransform(tabhome.ModelTransform);
+				tabhome.showTab(screenSpace);
+				break;
+			case 1:
+				SetSuitTransform(tabshowcase.mSuitInspector.ModelTransforms[0]);
+				tabshowcase.showTab(screenSpace);
+				break;
 		}
+
+		// Border
 		GUI.color = Color.white;
 		GUI.DrawTexture(new Rect(0f, 0f, screenSpace.width, 5f), Border);
 		GUI.DrawTexture(new Rect(0f, screenSpace.height - 24f, screenSpace.width, 24f), Border);
 		GUI.DrawTexture(new Rect(0f, 0f, 5f, screenSpace.height), Border);
 		GUI.DrawTexture(new Rect(screenSpace.width - 5f, 0f, 5f, screenSpace.height), Border);
+
+		// Faction flag
 		GUIUtil.GUIEnableOverride(bEnable: true);
 		GUI.Box(new Rect(FlagPos - 43.5f, 5f, 257f, 20f), GameData.getFactionDisplayName(GameData.MyFactionId).ToUpper(), "FactionFlagTop");
 		GUIUtil.GUIEnable(bEnable: true);
-		GUI.BeginGroup(new Rect(screenSpace.width - (float)XPCreditsImg.width, screenSpace.height - (float)XPCreditsImg.height, XPCreditsImg.width, XPCreditsImg.height));
+
+        #region xpcredits
+        GUI.BeginGroup(new Rect(screenSpace.width - (float)XPCreditsImg.width, screenSpace.height - (float)XPCreditsImg.height, XPCreditsImg.width, XPCreditsImg.height));
 		GUI.DrawTexture(new Rect(0f, 0f, XPCreditsImg.width, XPCreditsImg.height), XPCreditsImg);
 		GUI.Label(new Rect(0f, 0f, XPCreditsImg.width, XPCreditsImg.height), GameData.MyTotalCredits.ToString(), "Credits");
-		if (GameData.MyLevel == 50)
-		{
+		if (GameData.MyLevel == 50) {
 			GUI.Box(new Rect(10f, 72f, 243f, 26f), GUIContent.none, "MaxLevel");
-		}
-		else
-		{
+		} else {
 			GUI.Box(new Rect(12f, 74f, 50f + Mathf.Max(0f, 150f * (((float)GameData.MyTotalXP - (float)GameData.getExpNeededForLevel(GameData.MyLevel)) / (float)(GameData.getExpNeededForLevel(GameData.MyLevel + 1) - GameData.getExpNeededForLevel(GameData.MyLevel)))), 22f), GUIContent.none, "XPBar");
 			GUI.Label(new Rect(0f, 0f, XPCreditsImg.width, XPCreditsImg.height), GameData.MyLevel.ToString(), "MyLevel");
 			GUI.Label(new Rect(0f, 0f, XPCreditsImg.width, XPCreditsImg.height), (GameData.MyLevel + 1).ToString(), "NextLevel");
 		}
 		GUI.EndGroup();
-		GUI.BeginGroup(new Rect(0f, screenSpace.height - (float)PlayerImgBG.height, PlayerImgBG.width, PlayerImgBG.height));
+        #endregion
+
+        #region Avatar
+        GUI.BeginGroup(new Rect(0f, screenSpace.height - (float)PlayerImgBG.height, PlayerImgBG.width, PlayerImgBG.height));
 		GUI.DrawTexture(new Rect(0f, 0f, PlayerImgBG.width, PlayerImgBG.height), PlayerImgBG);
-		if (avatarTexture != null)
-		{
+		if (avatarTexture != null) {
 			GUI.DrawTexture(new Rect(4f, PlayerImgBG.height - 47, 43f, 43f), avatarTexture);
-		}
-		else
-		{
+		} else {
 			avatarTexture = (Resources.Load("HUD/avatar/" + GameHUD.avatar_images[GameData.MySuitID - 1]) as Texture2D);
 		}
 		GUI.EndGroup();
-		GUI.BeginGroup(new Rect(0f, 0f, NavButtonsBG.width + 100, NavButtonsBG.height));
+        #endregion
+
+        #region NavButtons
+        GUI.BeginGroup(new Rect(0f, 0f, NavButtonsBG.width + 100, NavButtonsBG.height));
 		GUI.DrawTexture(new Rect(NavIndicator, 37.5f, 87f, 79f), NavStateImg[(GameData.MyFactionId - 1) * 2 + NavState]);
 		GUI.DrawTexture(new Rect(0f, 0f, NavButtonsBG.width, NavButtonsBG.height), NavButtonsBG);
-		switch (GUIUtil.CustomButton(NavButtonTris, new Rect(6f, 5f, 81f, 72f), GUIContent.none, "Home" + GameData.MyFactionId))
-		{
-		case GUIUtil.GUIState.Click:
-			curhover = "Home";
-			GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
-			DoTransition(0);
-			break;
-		case GUIUtil.GUIState.Hover:
-		case GUIUtil.GUIState.Active:
-			if (Event.current.type == EventType.Repaint)
-			{
+		switch (GUIUtil.CustomButton(NavButtonTris, new Rect(6f, 5f, 81f, 72f), GUIContent.none, "Home" + GameData.MyFactionId)) {
+			case GUIUtil.GUIState.Click:
 				curhover = "Home";
-				if (lastHover != curhover)
-				{
-					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+				GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
+				DoTransition(0);
+				break;
+			case GUIUtil.GUIState.Hover:
+			case GUIUtil.GUIState.Active:
+				if (Event.current.type == EventType.Repaint) {
+					curhover = "Home";
+					if (lastHover != curhover) {
+						GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+					}
 				}
-			}
-			break;
+				break;
 		}
-		switch (GUIUtil.CustomButton(NavButtonTris, new Rect(6f, 80f, 81f, 72f), GUIContent.none, "Hangar" + GameData.MyFactionId))
-		{
-		case GUIUtil.GUIState.Click:
-			curhover = "Hangar";
-			GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
-			DoTransition(1);
-			FirstUse.DoAction(FirstUse.Frame.RequiredAction.Open_Showcase);
-			break;
-		case GUIUtil.GUIState.Hover:
-		case GUIUtil.GUIState.Active:
-			if (Event.current.type == EventType.Repaint)
-			{
+		switch (GUIUtil.CustomButton(NavButtonTris, new Rect(6f, 80f, 81f, 72f), GUIContent.none, "Hangar" + GameData.MyFactionId)) {
+			case GUIUtil.GUIState.Click:
 				curhover = "Hangar";
-				if (lastHover != curhover)
-				{
-					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+				GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
+				DoTransition(1);
+				FirstUse.DoAction(FirstUse.Frame.RequiredAction.Open_Showcase);
+				break;
+			case GUIUtil.GUIState.Hover:
+			case GUIUtil.GUIState.Active:
+				if (Event.current.type == EventType.Repaint) {
+					curhover = "Hangar";
+					if (lastHover != curhover) {
+						GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+					}
 				}
-			}
-			break;
+				break;
 		}
 		GUI.EndGroup();
-		GUI.BeginGroup(new Rect(screenSpace.width - (float)PlayButtonBG.width, 0f, PlayButtonBG.width, PlayButtonBG.height));
+        #endregion
+
+        #region PlayButtons
+        GUI.BeginGroup(new Rect(screenSpace.width - (float)PlayButtonBG.width, 0f, PlayButtonBG.width, PlayButtonBG.height));
 		GUI.DrawTexture(new Rect(0f, 0f, PlayButtonBG.width, PlayButtonBG.height), PlayButtonBG);
 		int num = (int)(Time.realtimeSinceStartup * 24f) % animmod;
-		switch (GUIUtil.CustomButton(PlayButtonTris, new Rect(8f, 4f, 195f, 51f), GUIContent.none, "Battle" + GameData.MyFactionId))
-		{
-		case GUIUtil.GUIState.Inactive:
-		case (GUIUtil.GUIState)3:
-		case (GUIUtil.GUIState)5:
-			GUI.DrawTexture(new Rect(8f, 4f, 195f, 51f), BattleText);
-			break;
-		case GUIUtil.GUIState.None:
-			if (num < 20)
-			{
-				GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.8f, 0.8f, 0.8f) : Color.yellow);
-				GUI.DrawTexture(new Rect(6f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
-				GUI.color = Color.white;
-			}
-			GUI.DrawTexture(new Rect(8f, 4f, 195f, 51f), BattleText);
-			break;
-		case GUIUtil.GUIState.Active:
-			if (num < 20)
-			{
-				GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.48f, 0.49f, 0.22f) : new Color(0.73f, 0.19f, 0.09f));
-				GUI.DrawTexture(new Rect(6f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
-				GUI.color = Color.white;
-			}
-			GUI.DrawTexture(new Rect(8f, 4f, 195f, 51f), BattleText);
-			break;
-		case GUIUtil.GUIState.Hover:
-			if (Event.current.type == EventType.Repaint)
-			{
-				curhover = "Battle";
-				if (lastHover != curhover)
-				{
-					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+
+		// Battle button
+		switch (GUIUtil.CustomButton(PlayButtonTris, new Rect(8f, 4f, 195f, 51f), GUIContent.none, "Battle" + GameData.MyFactionId)) {
+			case GUIUtil.GUIState.Inactive:
+			case (GUIUtil.GUIState)3:
+			case (GUIUtil.GUIState)5:
+				GUI.DrawTexture(new Rect(8f, 4f, 195f, 51f), BattleText);
+				break;
+			case GUIUtil.GUIState.None:
+				if (num < 20) {
+					GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.8f, 0.8f, 0.8f) : Color.yellow);
+					GUI.DrawTexture(new Rect(6f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
+					GUI.color = Color.white;
 				}
-				if (num < 20)
-				{
+				GUI.DrawTexture(new Rect(8f, 4f, 195f, 51f), BattleText);
+				break;
+			case GUIUtil.GUIState.Active:
+				if (num < 20) {
 					GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.48f, 0.49f, 0.22f) : new Color(0.73f, 0.19f, 0.09f));
 					GUI.DrawTexture(new Rect(6f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
 					GUI.color = Color.white;
 				}
-				GUI.color = Color.black;
 				GUI.DrawTexture(new Rect(8f, 4f, 195f, 51f), BattleText);
-				GUI.color = Color.white;
-			}
-			break;
-		case GUIUtil.GUIState.Click:
-			curhover = "Battle";
-			GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
-			battleType = 1;
-			m_networkManager.m_gameModeStr = GameMode.freeforall.ToString();
-			break;
+				break;
+			case GUIUtil.GUIState.Hover:
+				if (Event.current.type == EventType.Repaint) {
+					curhover = "Battle";
+					if (lastHover != curhover) {
+						GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+					}
+					if (num < 20) {
+						GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.48f, 0.49f, 0.22f) : new Color(0.73f, 0.19f, 0.09f));
+						GUI.DrawTexture(new Rect(6f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
+						GUI.color = Color.white;
+					}
+					GUI.color = Color.black;
+					GUI.DrawTexture(new Rect(8f, 4f, 195f, 51f), BattleText);
+					GUI.color = Color.white;
+				}
+				break;
+			case GUIUtil.GUIState.Click:
+				Debug.Log("Battle clicked");
+				curhover = "Battle";
+				GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
+				battleType = 1;
+				m_networkManager.m_gameModeStr = GameMode.freeforall.ToString();
+				break;
 		}
 		GUIUtil.GUIEnable(GameData.MyPlayStatus != 1 || GameData.MATCH_MODE == GameData.Build.DEBUG);
-		switch (GUIUtil.CustomButton(PlayButtonTris, new Rect(176f, 4f, 195f, 51f), GUIContent.none, "TeamBattle" + GameData.MyFactionId))
-		{
-		case GUIUtil.GUIState.Inactive:
-		case (GUIUtil.GUIState)3:
-		case (GUIUtil.GUIState)5:
-			GUI.DrawTexture(new Rect(176f, 4f, 195f, 51f), TeamBattleText);
-			break;
-		case GUIUtil.GUIState.None:
-			GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.8f, 0.8f, 0.8f) : Color.yellow);
-			if (num < 20)
-			{
-				GUI.DrawTexture(new Rect(175f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
-			}
-			if (num >= 7 && num < 25)
-			{
-				GUI.DrawTexture(new Rect(158f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 5]);
-			}
-			if (num >= 14 && num < 30)
-			{
-				GUI.DrawTexture(new Rect(141f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 10]);
-			}
-			GUI.color = Color.white;
-			GUI.DrawTexture(new Rect(176f, 4f, 195f, 51f), TeamBattleText);
-			break;
-		case GUIUtil.GUIState.Active:
-			GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.48f, 0.49f, 0.22f) : new Color(0.73f, 0.19f, 0.09f));
-			if (num < 20)
-			{
-				GUI.DrawTexture(new Rect(175f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
-			}
-			if (num >= 7 && num < 25)
-			{
-				GUI.DrawTexture(new Rect(158f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 5]);
-			}
-			if (num >= 14 && num < 30)
-			{
-				GUI.DrawTexture(new Rect(141f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 10]);
-			}
-			GUI.color = Color.white;
-			GUI.DrawTexture(new Rect(176f, 4f, 195f, 51f), TeamBattleText);
-			break;
-		case GUIUtil.GUIState.Hover:
-			if (Event.current.type == EventType.Repaint)
-			{
-				curhover = "TeamBattle";
-				if (lastHover != curhover)
-				{
-					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
-				}
-				GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.48f, 0.49f, 0.22f) : new Color(0.73f, 0.19f, 0.09f));
-				if (num < 20)
-				{
+
+		// Team battle button
+		switch (GUIUtil.CustomButton(PlayButtonTris, new Rect(176f, 4f, 195f, 51f), GUIContent.none, "TeamBattle" + GameData.MyFactionId)) {
+			case GUIUtil.GUIState.Inactive:
+			case (GUIUtil.GUIState)3:
+			case (GUIUtil.GUIState)5:
+				GUI.DrawTexture(new Rect(176f, 4f, 195f, 51f), TeamBattleText);
+				break;
+			case GUIUtil.GUIState.None:
+				GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.8f, 0.8f, 0.8f) : Color.yellow);
+				if (num < 20) {
 					GUI.DrawTexture(new Rect(175f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
 				}
-				if (num >= 7 && num < 25)
-				{
+				if (num >= 7 && num < 25) {
 					GUI.DrawTexture(new Rect(158f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 5]);
 				}
-				if (num >= 14 && num < 30)
-				{
+				if (num >= 14 && num < 30) {
 					GUI.DrawTexture(new Rect(141f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 10]);
 				}
-				GUI.color = Color.black;
-				GUI.DrawTexture(new Rect(176f, 4f, 195f, 51f), TeamBattleText);
 				GUI.color = Color.white;
-			}
-			break;
-		case GUIUtil.GUIState.Click:
-			curhover = "TeamBattle";
-			GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
-			battleType = 2;
-			m_networkManager.m_gameModeStr = GameMode.team.ToString();
-			break;
+				GUI.DrawTexture(new Rect(176f, 4f, 195f, 51f), TeamBattleText);
+				break;
+			case GUIUtil.GUIState.Active:
+				GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.48f, 0.49f, 0.22f) : new Color(0.73f, 0.19f, 0.09f));
+				if (num < 20) {
+					GUI.DrawTexture(new Rect(175f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
+				}
+				if (num >= 7 && num < 25) {
+					GUI.DrawTexture(new Rect(158f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 5]);
+				}
+				if (num >= 14 && num < 30) {
+					GUI.DrawTexture(new Rect(141f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 10]);
+				}
+				GUI.color = Color.white;
+				GUI.DrawTexture(new Rect(176f, 4f, 195f, 51f), TeamBattleText);
+				break;
+			case GUIUtil.GUIState.Hover:
+				if (Event.current.type == EventType.Repaint) {
+					curhover = "TeamBattle";
+					if (lastHover != curhover) {
+						GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+					}
+					GUI.color = ((GameData.MyFactionId != 1) ? new Color(0.48f, 0.49f, 0.22f) : new Color(0.73f, 0.19f, 0.09f));
+					if (num < 20) {
+						GUI.DrawTexture(new Rect(175f, 4f, 174f, 50f), BattleButtonAnimFrames[num]);
+					}
+					if (num >= 7 && num < 25) {
+						GUI.DrawTexture(new Rect(158f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 5]);
+					}
+					if (num >= 14 && num < 30) {
+						GUI.DrawTexture(new Rect(141f, 4f, 174f, 50f), BattleButtonAnimFrames[num - 10]);
+					}
+					GUI.color = Color.black;
+					GUI.DrawTexture(new Rect(176f, 4f, 195f, 51f), TeamBattleText);
+					GUI.color = Color.white;
+				}
+				break;
+			case GUIUtil.GUIState.Click:
+				curhover = "TeamBattle";
+				GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
+				battleType = 2;
+				m_networkManager.m_gameModeStr = GameMode.team.ToString();
+				break;
 		}
+
 		GUIUtil.GUIEnable(bEnable: true);
 		GUI.EndGroup();
-		GUI.Box(new Rect(50f, screenSpace.height - 20f, screenSpace.width - 55f, 16f), GameData.MyDisplayName.ToUpper(), "NameBanner" + GameData.MyFactionId);
+        #endregion
+
+		// Name
+        GUI.Box(new Rect(50f, screenSpace.height - 20f, screenSpace.width - 55f, 16f), GameData.MyDisplayName.ToUpper(), "NameBanner" + GameData.MyFactionId);
 		GUI.Box(new Rect(screenSpace.width - 124f, screenSpace.height - 20f, 4f, 16f), GUIContent.none, "Separator");
 		GUI.Box(new Rect(screenSpace.width - 243f, screenSpace.height - 20f, 4f, 16f), GUIContent.none, "Separator");
-		switch (GUIUtil.Toggle(new Rect(screenSpace.width - 120f, screenSpace.height - 20f, 115f, 16f), GameData.MyFactionId == 2, GUIContent.none, "FullScreen"))
-		{
-		case GUIUtil.GUIState.Click:
-		case (GUIUtil.GUIState)24:
-		case (GUIUtil.GUIState)40:
-			curhover = "FullScreen";
-			GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
-			if (Screen.fullScreen)
-			{
-				Screen.SetResolution(900, 600, fullscreen: false);
-			}
-			else
-			{
-				Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fullscreen: true);
-			}
-			break;
-		case GUIUtil.GUIState.Hover:
-		case (GUIUtil.GUIState)18:
-		case (GUIUtil.GUIState)20:
-		case (GUIUtil.GUIState)34:
-		case (GUIUtil.GUIState)36:
-			if (Event.current.type == EventType.Repaint)
-			{
-				curhover = "FullScreen";
-				if (lastHover != curhover)
-				{
-					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
-				}
-			}
-			break;
-		}
-		switch (GUIUtil.Toggle(new Rect(screenSpace.width - 239f, screenSpace.height - 20f, 115f, 16f), GameData.MyFactionId == 2, GUIContent.none, "Options"))
-		{
-		case GUIUtil.GUIState.Click:
-		case (GUIUtil.GUIState)24:
-		case (GUIUtil.GUIState)40:
-			curhover = "Options";
-			GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
-			DynamicOptions.bDrawing = true;
-			FirstUse.DoAction(FirstUse.Frame.RequiredAction.Open_Options);
-			break;
-		case GUIUtil.GUIState.Hover:
-		case (GUIUtil.GUIState)18:
-		case (GUIUtil.GUIState)20:
-		case (GUIUtil.GUIState)34:
-		case (GUIUtil.GUIState)36:
-			if (Event.current.type == EventType.Repaint)
-			{
-				curhover = "Options";
-				if (lastHover != curhover)
-				{
-					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
-				}
-			}
-			break;
-		}
-		if (bAllowSocial)
-		{
-			GUI.Box(new Rect(screenSpace.width - 362f, screenSpace.height - 20f, 4f, 16f), GUIContent.none, "Separator");
-			switch (GUIUtil.Toggle(new Rect(screenSpace.width - 358f, screenSpace.height - 20f, 115f, 16f), GameData.MyFactionId == 2, GUIContent.none, "Friends"))
-			{
+
+		// Fullscreen button
+		switch (GUIUtil.Toggle(new Rect(screenSpace.width - 120f, screenSpace.height - 20f, 115f, 16f), GameData.MyFactionId == 2, GUIContent.none, "FullScreen")) {
 			case GUIUtil.GUIState.Click:
 			case (GUIUtil.GUIState)24:
 			case (GUIUtil.GUIState)40:
-				curhover = "Friends";
+				curhover = "FullScreen";
 				GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
-				bDrawFriends = !bDrawFriends;
+				if (Screen.fullScreen) {
+					Screen.SetResolution(900, 600, fullscreen: false);
+				} else {
+					Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fullscreen: true);
+				}
+				break;
+			case GUIUtil.GUIState.Hover:
+			case (GUIUtil.GUIState)18:
+			case (GUIUtil.GUIState)20:
+			case (GUIUtil.GUIState)34:
+			case (GUIUtil.GUIState)36:
+				if (Event.current.type == EventType.Repaint) {
+					curhover = "FullScreen";
+					if (lastHover != curhover) {
+						GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+					}
+				}
+				break;
+		}
+
+		// Options button
+		switch (GUIUtil.Toggle(new Rect(screenSpace.width - 239f, screenSpace.height - 20f, 115f, 16f), GameData.MyFactionId == 2, GUIContent.none, "Options")) {
+			case GUIUtil.GUIState.Click:
+			case (GUIUtil.GUIState)24:
+			case (GUIUtil.GUIState)40:
+				curhover = "Options";
+				GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
+				DynamicOptions.bDrawing = true;
 				FirstUse.DoAction(FirstUse.Frame.RequiredAction.Open_Options);
 				break;
 			case GUIUtil.GUIState.Hover:
@@ -827,19 +747,44 @@ public class GameHome : MonoBehaviour
 			case (GUIUtil.GUIState)20:
 			case (GUIUtil.GUIState)34:
 			case (GUIUtil.GUIState)36:
-				if (Event.current.type == EventType.Repaint)
-				{
-					curhover = "Friends";
-					if (lastHover != curhover)
-					{
+				if (Event.current.type == EventType.Repaint) {
+					curhover = "Options";
+					if (lastHover != curhover) {
 						GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
 					}
 				}
 				break;
+		}
+
+		// Social panel
+		if (bAllowSocial) {
+			GUI.Box(new Rect(screenSpace.width - 362f, screenSpace.height - 20f, 4f, 16f), GUIContent.none, "Separator");
+			switch (GUIUtil.Toggle(new Rect(screenSpace.width - 358f, screenSpace.height - 20f, 115f, 16f), GameData.MyFactionId == 2, GUIContent.none, "Friends")) {
+				case GUIUtil.GUIState.Click:
+				case (GUIUtil.GUIState)24:
+				case (GUIUtil.GUIState)40:
+					curhover = "Friends";
+					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
+					bDrawFriends = !bDrawFriends;
+					FirstUse.DoAction(FirstUse.Frame.RequiredAction.Open_Options);
+					break;
+				case GUIUtil.GUIState.Hover:
+				case (GUIUtil.GUIState)18:
+				case (GUIUtil.GUIState)20:
+				case (GUIUtil.GUIState)34:
+				case (GUIUtil.GUIState)36:
+					if (Event.current.type == EventType.Repaint) {
+						curhover = "Friends";
+						if (lastHover != curhover) {
+							GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+						}
+					}
+					break;
 			}
 		}
-		if (battleType > 0 && !m_connected)
-		{
+
+		// Battle button is pressed
+		if (battleType > 0 && !m_connected) {
 			GameObject gameObject = GameObject.Find("Tracker");
 			TrackerScript trackerScript = gameObject.GetComponent("TrackerScript") as TrackerScript;
 			GameData.ConsecutiveGames = 0;
@@ -851,22 +796,30 @@ public class GameHome : MonoBehaviour
 			Connect();
 		}
 		GUI.EndGroup();
-		if (m_DrawHolidayEvent != null)
-		{
+
+		// Temporary play button
+		if (GUI.Button(new Rect(Screen.width / 2, Screen.height / 2, 100, 100), "Play")) {
+			Debug.Log("Battle clicked");
+			curhover = "Battle";
+			battleType = 1;
+			m_networkManager.m_gameModeStr = GameMode.freeforall.ToString();
+		}
+
+		if (m_DrawHolidayEvent != null) {
 			m_DrawHolidayEvent();
 		}
-		if (m_isLogin)
-		{
+
+		if (m_isLogin) {
 			GUI.Label(new Rect(10f, 90f, 90f, 100f), "TegId: ");
 			GameData.MyTEGid = GUI.TextField(new Rect(100f, 90f, 150f, 20f), GameData.MyTEGid);
 			GUI.Label(new Rect(270f, 90f, 90f, 100f), "AuthId: ");
 			GameData.MyAuthid = GUI.TextField(new Rect(370f, 90f, 200f, 20f), GameData.MyAuthid);
 			GameData.MyPlayStatus = 3;
 		}
-		GUI.DrawTexture(BlackBox1, GUI.skin.GetStyle("blackbox").normal.background);
-		GUI.DrawTexture(BlackBox2, GUI.skin.GetStyle("blackbox").normal.background);
-		if (bAllowSocial && bDrawFriends && !DynamicOptions.bDrawing)
-		{
+		// Temporary disable
+		//GUI.DrawTexture(BlackBox1, GUI.skin.GetStyle("blackbox").normal.background);
+		//GUI.DrawTexture(BlackBox2, GUI.skin.GetStyle("blackbox").normal.background);
+		if (bAllowSocial && bDrawFriends && !DynamicOptions.bDrawing) {
 			FriendsWindow.x = screenSpace.width - 358f;
 			FriendsWindow.y = screenSpace.height - FriendsWindow.height - 27f;
 			GUI.Window(1700, FriendsWindow, DrawFriendsList, GUIContent.none);
@@ -874,8 +827,7 @@ public class GameHome : MonoBehaviour
 		lastHover = curhover;
 	}
 
-	private void DrawFriendsList(int windowID)
-	{
+	private void DrawFriendsList(int windowID) {
 		curhover2 = ((Event.current.type != EventType.Repaint) ? lastHover2 : string.Empty);
 		Rect position = new Rect(0f, 0f, FriendsWindow.width, FriendsWindow.height);
 		GUI.Box(position, GUIContent.none, "blackbox");
@@ -884,34 +836,29 @@ public class GameHome : MonoBehaviour
 		GUI.Label(new Rect(5f, 5f, position.width - 80f, 40f), "Friends");
 		GUI.Box(position2, GUIContent.none, "whitebox");
 		GUI.color = Color.white;
-		switch (GUIUtil.Button(new Rect(FriendsWindow.width - 64f, 0f, 64f, 42f), GUIContent.none, "Close"))
-		{
-		case GUIUtil.GUIState.Click:
-			curhover2 = "Close";
-			GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Hangar_Button_Inactive);
-			bDrawFriends = false;
-			break;
-		case GUIUtil.GUIState.Hover:
-		case GUIUtil.GUIState.Active:
-			if (Event.current.type == EventType.Repaint)
-			{
+		switch (GUIUtil.Button(new Rect(FriendsWindow.width - 64f, 0f, 64f, 42f), GUIContent.none, "Close")) {
+			case GUIUtil.GUIState.Click:
 				curhover2 = "Close";
-				if (lastHover2 != curhover2)
-				{
-					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+				GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Hangar_Button_Inactive);
+				bDrawFriends = false;
+				break;
+			case GUIUtil.GUIState.Hover:
+			case GUIUtil.GUIState.Active:
+				if (Event.current.type == EventType.Repaint) {
+					curhover2 = "Close";
+					if (lastHover2 != curhover2) {
+						GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Over);
+					}
 				}
-			}
-			break;
+				break;
 		}
 		GUILayout.BeginHorizontal();
 		GUILayout.Space(position2.x);
 		GUILayout.BeginVertical();
 		GUILayout.Space(position2.y - 5f);
 		FriendsScroll = GUILayout.BeginScrollView(FriendsScroll, GUILayout.Width(position2.width), GUILayout.Height(position2.height));
-		if (bExpandFriends = GUILayout.Toggle(bExpandFriends, "Friends"))
-		{
-			for (int i = 0; i < 6; i++)
-			{
+		if (bExpandFriends = GUILayout.Toggle(bExpandFriends, "Friends")) {
+			for (int i = 0; i < 6; i++) {
 				GUILayout.BeginHorizontal();
 				GUILayout.Space(20f);
 				GUILayout.Box(GUIContent.none, "whitebox", GUILayout.Width(30f), GUILayout.Height(30f));
@@ -925,10 +872,8 @@ public class GameHome : MonoBehaviour
 				GUILayout.EndHorizontal();
 			}
 		}
-		if (bExpandOffline = GUILayout.Toggle(bExpandOffline, "Offline Friends"))
-		{
-			for (int j = 0; j < 6; j++)
-			{
+		if (bExpandOffline = GUILayout.Toggle(bExpandOffline, "Offline Friends")) {
+			for (int j = 0; j < 6; j++) {
 				GUILayout.BeginHorizontal();
 				GUILayout.Space(20f);
 				GUILayout.Box(GUIContent.none, "whitebox", GUILayout.Width(30f), GUILayout.Height(30f));
@@ -942,10 +887,8 @@ public class GameHome : MonoBehaviour
 				GUILayout.EndHorizontal();
 			}
 		}
-		if (bExpandSentInvites = GUILayout.Toggle(bExpandSentInvites, "Invites Sent"))
-		{
-			for (int k = 0; k < 6; k++)
-			{
+		if (bExpandSentInvites = GUILayout.Toggle(bExpandSentInvites, "Invites Sent")) {
+			for (int k = 0; k < 6; k++) {
 				GUILayout.BeginHorizontal();
 				GUILayout.Space(20f);
 				GUILayout.Box(GUIContent.none, "whitebox", GUILayout.Width(30f), GUILayout.Height(30f));
@@ -959,10 +902,8 @@ public class GameHome : MonoBehaviour
 				GUILayout.EndHorizontal();
 			}
 		}
-		if (bExpandReceivedInvites = GUILayout.Toggle(bExpandReceivedInvites, "Invites Received"))
-		{
-			for (int l = 0; l < 6; l++)
-			{
+		if (bExpandReceivedInvites = GUILayout.Toggle(bExpandReceivedInvites, "Invites Received")) {
+			for (int l = 0; l < 6; l++) {
 				GUILayout.BeginHorizontal();
 				GUILayout.Space(20f);
 				GUILayout.Box(GUIContent.none, "whitebox", GUILayout.Width(30f), GUILayout.Height(30f));
@@ -976,10 +917,8 @@ public class GameHome : MonoBehaviour
 				GUILayout.EndHorizontal();
 			}
 		}
-		if (bExpandRecentPlaymates = GUILayout.Toggle(bExpandRecentPlaymates, "Recent Battlemates"))
-		{
-			for (int m = 0; m < 6; m++)
-			{
+		if (bExpandRecentPlaymates = GUILayout.Toggle(bExpandRecentPlaymates, "Recent Battlemates")) {
+			for (int m = 0; m < 6; m++) {
 				GUILayout.BeginHorizontal();
 				GUILayout.Space(20f);
 				GUILayout.Box(GUIContent.none, "whitebox", GUILayout.Width(30f), GUILayout.Height(30f));
@@ -1000,8 +939,7 @@ public class GameHome : MonoBehaviour
 		lastHover2 = curhover2;
 	}
 
-	public void executeSuitPurchase(int suitToBuy)
-	{
+	public void executeSuitPurchase(int suitToBuy) {
 		string text = GameData.SERVICE_PATH + "/ExonautPlayerBuySuit";
 		WWWForm wWWForm = new WWWForm();
 		wWWForm.AddField("TEGid", GameData.MyTEGid);
@@ -1013,48 +951,40 @@ public class GameHome : MonoBehaviour
 		StartCoroutine(waitForSuitPurchase(www, suitToBuy));
 	}
 
-	private IEnumerator waitForSuitPurchase(WWW www, int suitToBuy)
-	{
+	private IEnumerator waitForSuitPurchase(WWW www, int suitToBuy) {
 		yield return www;
-		if (www.error == null)
-		{
+		if (www.error == null) {
 			XmlDocument xmlDoc = new XmlDocument();
 			xmlDoc.LoadXml(www.text);
 			XmlNode node = xmlDoc.FirstChild;
-			if (node == null)
-			{
+			if (node == null) {
 				Debug.Log("Purchase Authentication was NULL");
 				yield break;
 			}
 			XmlAttributeCollection data = node.Attributes;
 			XmlAttribute status = (XmlAttribute)data.GetNamedItem("status");
 			string msg = string.Empty;
-			if (data.GetNamedItem("message") != null)
-			{
+			if (data.GetNamedItem("message") != null) {
 				msg = data.GetNamedItem("message").Value;
 			}
-			switch (status.Value)
-			{
-			case "success":
-				GameData.AddOwnedSuit(suitToBuy);
-				GameData.MyTotalCredits -= GameData.getExosuit(suitToBuy).mCost;
-				MessageBox.AddMessage("Suit Purchase Success!", "Your Suit was successfully Purchased.", null, true, MessageBox.MessageType.MB_OK, null);
-				MessageBox.AddMessage("Equip New Suit?", "Would you like to equip your new suit?", null, false, MessageBox.MessageType.MB_YESNO, tabshowcase.EquipSelected);
-				break;
-			case "fail":
-				MessageBox.AddMessage("Operation Error | Game DB Says You Cannot Purchase", msg, null, true, MessageBox.MessageType.MB_OK, null);
-				break;
+			switch (status.Value) {
+				case "success":
+					GameData.AddOwnedSuit(suitToBuy);
+					GameData.MyTotalCredits -= GameData.getExosuit(suitToBuy).mCost;
+					MessageBox.AddMessage("Suit Purchase Success!", "Your Suit was successfully Purchased.", null, true, MessageBox.MessageType.MB_OK, null);
+					MessageBox.AddMessage("Equip New Suit?", "Would you like to equip your new suit?", null, false, MessageBox.MessageType.MB_YESNO, tabshowcase.EquipSelected);
+					break;
+				case "fail":
+					MessageBox.AddMessage("Operation Error | Game DB Says You Cannot Purchase", msg, null, true, MessageBox.MessageType.MB_OK, null);
+					break;
 			}
-		}
-		else
-		{
+		} else {
 			MessageBox.AddMessage("ERROR PURCHASING SUIT!", "You Cannot Purchase this suit at this time.", null, true, MessageBox.MessageType.MB_OK, null);
 			Debug.Log("@Error Purchasing Suit:" + www.error.ToString());
 		}
 	}
 
-	public void getMissionInProgressUpdate()
-	{
+	public void getMissionInProgressUpdate() {
 		string url = GameData.SERVICE_PATH + "/ExonautPlayerGetMissionProgress";
 		WWWForm wWWForm = new WWWForm();
 		wWWForm.AddField("exId", GameData.MyExonautId);
@@ -1063,64 +993,52 @@ public class GameHome : MonoBehaviour
 		StartCoroutine(waitForProgUpdate(www));
 	}
 
-	private IEnumerator waitForProgUpdate(WWW www)
-	{
-		while (!www.isDone)
-		{
+	private IEnumerator waitForProgUpdate(WWW www) {
+		while (!www.isDone) {
 			Debug.Log(www.progress);
 			yield return new WaitForEndOfFrame();
 		}
 		Debug.Log("Mission Progress update\n" + www.text);
-		if (www.error == null)
-		{
+		if (www.error == null) {
 			XmlDocument xmlDoc = new XmlDocument();
 			xmlDoc.LoadXml(www.text);
 			XmlNode node = xmlDoc.FirstChild;
-			if (node == null)
-			{
+			if (node == null) {
 				Debug.Log("Mission Progress was NULL");
 				yield break;
 			}
 			Debug.Log("Mission Progress update\n" + www.text);
 			XmlAttributeCollection data = node.Attributes;
 			XmlAttribute status = (XmlAttribute)data.GetNamedItem("status");
-			switch (status.Value)
-			{
-			case "success":
-			{
-				GameData.LatestMissionsInProgress.Clear();
-				XmlNodeList missionsProg = xmlDoc.GetElementsByTagName("mission");
-				for (int i = 0; i < missionsProg.Count; i++)
-				{
-					XmlNode prog = missionsProg.Item(i);
-					XmlNodeList pData = prog.ChildNodes;
-					Hashtable progData = new Hashtable();
-					for (int s = 0; s < pData.Count; s++)
-					{
-						XmlNode Node = pData.Item(s);
-						progData.Add(value: Node.Attributes.GetNamedItem("value").Value, key: Node.Name);
+			switch (status.Value) {
+				case "success": {
+					GameData.LatestMissionsInProgress.Clear();
+					XmlNodeList missionsProg = xmlDoc.GetElementsByTagName("mission");
+					for (int i = 0; i < missionsProg.Count; i++) {
+						XmlNode prog = missionsProg.Item(i);
+						XmlNodeList pData = prog.ChildNodes;
+						Hashtable progData = new Hashtable();
+						for (int s = 0; s < pData.Count; s++) {
+							XmlNode Node = pData.Item(s);
+							progData.Add(value: Node.Attributes.GetNamedItem("value").Value, key: Node.Name);
+						}
+						GameData.addMissionInProgress(progData);
 					}
-					GameData.addMissionInProgress(progData);
+					break;
 				}
-				break;
+				case "fail":
+					Logger.trace("No Mission Progress update");
+					break;
 			}
-			case "fail":
-				Logger.trace("No Mission Progress update");
-				break;
-			}
-		}
-		else
-		{
+		} else {
 			Logger.trace("No Mission Progress update");
 		}
 	}
 
-	public void CheckTutorial(bool bOverride)
-	{
+	public void CheckTutorial(bool bOverride) {
 		Logger.traceError("CheckTutorial(" + bOverride + ")");
 		Logger.traceError("GameData.MyPlayStatus = " + GameData.MyPlayStatus);
-		if (bOverride)
-		{
+		if (bOverride) {
 			GameObject gameObject = GameObject.Find("NetworkManager");
 			m_networkManager = gameObject.GetComponent<NetworkManager>();
 			m_networkManager.Logout();
@@ -1144,24 +1062,18 @@ public class GameHome : MonoBehaviour
 			GameData.LoadWorld();
 			GameData.LoadSpawnPoints();
 			Application.LoadLevel("TutorialGamePlay");
-		}
-		else if (GameData.MyTutorialStep == 4)
-		{
-			if (GameData.MyPlayStatus == 1)
-			{
+		} else if (GameData.MyTutorialStep == 4) {
+			if (GameData.MyPlayStatus == 1) {
 				Object.Instantiate(GuestFirstUse);
 				GameData.MyTutorialStep = 1;
-			}
-			else if (GameData.MyPlayStatus == 2 || GameData.MyPlayStatus == 3)
-			{
+			} else if (GameData.MyPlayStatus == 2 || GameData.MyPlayStatus == 3) {
 				Object.Instantiate(RegisteredFirstUse);
 				GameData.MyTutorialStep = 1;
 			}
 		}
 	}
 
-	private void OnApplicationQuit()
-	{
+	private void OnApplicationQuit() {
 		Debug.Log("Application Quit - should destroy");
 	}
 }

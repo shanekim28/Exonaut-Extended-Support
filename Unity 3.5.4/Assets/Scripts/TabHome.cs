@@ -155,7 +155,7 @@ public class TabHome
 		if (GameData.MyPlayStatus == 1)
 		{
 			GUI.Box(new Rect(0f, 0f, missionGroup.width, missionGroup.height), GUIContent.none, GUI.skin.GetStyle("BoxTRCutaway"));
-			GUI.DrawTexture(new Rect(5f, 10f, missionGroup.width - 10f, missionGroup.height - 15f), mGuestFactionTexture);
+			//GUI.DrawTexture(new Rect(5f, 10f, missionGroup.width - 10f, missionGroup.height - 15f), mGuestFactionTexture);
 		}
 		else
 		{

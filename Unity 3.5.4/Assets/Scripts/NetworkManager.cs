@@ -165,10 +165,10 @@ public class NetworkManager : MonoBehaviour
 		}
 		else if (!smartFox.IsConnected)
 		{
-			Logger.trace("<< adding event listeners -- server: " + serverName + " port: " + serverPort);
+			Debug.Log("<< adding event listeners -- server: " + serverName + " port: " + serverPort);
 			AddEventListeners();
 			smartFox.Connect(serverName, serverPort);
-			Logger.trace("<< connecting to " + serverName + " port: " + serverPort);
+			Debug.Log("<< connecting to " + serverName + " port: " + serverPort);
 			running = true;
 		}
 		else
@@ -228,6 +228,9 @@ public class NetworkManager : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Adds event listeners to handle CONNECTION, CONNECTION_LOST, LOGIN, LOGIN_ERROR, ROOM_JOIN, USER_ENTER_ROOM, USER_EXIT_ROOM, LOGOUT, EXTENSION_RESPONSE, USER_VARIABLES_UPDATE, ROOM_REMOVE, and ROOM_VARIABLES_UPDATE events
+	/// </summary>
 	private void AddEventListeners()
 	{
 		if (smartFox == null)

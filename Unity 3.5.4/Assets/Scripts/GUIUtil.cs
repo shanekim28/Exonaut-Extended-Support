@@ -2,23 +2,19 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class GUIUtil : MonoBehaviour
-{
-	public enum GUIFlags
-	{
+public class GUIUtil : MonoBehaviour {
+	public enum GUIFlags {
 		WindowUp = 1
 	}
 
-	public enum BarDirection
-	{
+	public enum BarDirection {
 		Left,
 		Right,
 		Up,
 		Down
 	}
 
-	public enum GUISoundClips
-	{
+	public enum GUISoundClips {
 		TT_Global_Button_Press,
 		TT_Global_Button_Over,
 		TT_Hangar_Buy_Press,
@@ -34,8 +30,7 @@ public class GUIUtil : MonoBehaviour
 	}
 
 	[Serializable]
-	public class LoadingAnimation
-	{
+	public class LoadingAnimation {
 		public Texture2D Texture;
 
 		public int FPS;
@@ -43,8 +38,7 @@ public class GUIUtil : MonoBehaviour
 		public int Frames;
 	}
 
-	public enum ScaleDir
-	{
+	public enum ScaleDir {
 		UpperLeft,
 		Upper,
 		UpperRight,
@@ -56,8 +50,7 @@ public class GUIUtil : MonoBehaviour
 		Center
 	}
 
-	public enum GUIState
-	{
+	public enum GUIState {
 		None = 0,
 		Inactive = 1,
 		Hover = 2,
@@ -83,8 +76,14 @@ public class GUIUtil : MonoBehaviour
 
 	public Camera mModelRenderer;
 
+	public Transform mBackgroundPrefab;
+
+	public Transform mSuitEffectPrefab;
+
+	[NonSerialized]
 	public Transform mBackground;
 
+	[NonSerialized]
 	public Transform mSuitEffect;
 
 	public static string Tooltip = string.Empty;
@@ -173,144 +172,115 @@ public class GUIUtil : MonoBehaviour
 		"In a Team Battle you can't hurt the players on your team, but you should attack anybody on the opposing team!"
 	};
 
-	public static bool GUIEnabled
-	{
-		get
-		{
+	public static bool GUIEnabled {
+		get {
 			return GUI.enabled;
 		}
-		set
-		{
+		set {
 			GUIEnable(value);
 		}
 	}
 
-	public static bool TestFlag(GUIFlags Flag)
-	{
+	public static bool TestFlag(GUIFlags Flag) {
 		return (mInstance.mFlags & (int)Flag) != 0;
 	}
 
-	public static void PlayGUISound(string EnumName)
-	{
+	public static void PlayGUISound(string EnumName) {
 		PlayGUISound((GUISoundClips)(int)Enum.Parse(typeof(GUISoundClips), EnumName));
 	}
 
-	public static void PlayGUISound(GUISoundClips sound)
-	{
-		if (sound >= GUISoundClips.TT_Global_Button_Press && (int)sound < GUISounds.Length)
-		{
+	public static void PlayGUISound(GUISoundClips sound) {
+		if (sound >= GUISoundClips.TT_Global_Button_Press && (int)sound < GUISounds.Length) {
 			AudioClip audioClip = GUISounds[(int)sound];
-			if (audioClip != null)
-			{
+			if (audioClip != null) {
 				mInstance.GetComponent<AudioSource>().PlayOneShot(audioClip);
-			}
-			else
-			{
+			} else {
 				Logger.trace("===== NULL SOUND : " + sound + " =====");
 			}
-		}
-		else
-		{
+		} else {
 			Logger.trace("PlayGUISound out array range");
 		}
 	}
 
-	private void Start()
-	{
+	private void Awake() {
 		mInstance = this;
-	}
-
-	private void Awake()
-	{
-		mInstance = this;
-		for (int i = 0; i < 11; i++)
-		{
+		for (int i = 0; i < 11; i++) {
 			GUISounds[i] = (Resources.Load(GUISoundStrings[i]) as AudioClip);
 		}
 		MessageBox.mMessageBox = new MessageBox();
 		MessageBox.ResetWindowPosition();
 		mModelRenderer.gameObject.active = true;
 		mModelRenderer.enabled = false;
-		mBackground = (UnityEngine.Object.Instantiate(mBackground) as Transform);
+		mBackground = (Instantiate(mBackgroundPrefab) as Transform);
 		mBackground.transform.position = base.transform.position;
-		mSuitEffect = (UnityEngine.Object.Instantiate(mSuitEffect) as Transform);
+		mSuitEffect = (Instantiate(mSuitEffectPrefab) as Transform);
 		mSuitEffect.transform.position = base.transform.position;
 		mSuitEffect.gameObject.SetActiveRecursively(state: false);
-		UnityEngine.Object.DontDestroyOnLoad(mBackground);
-		UnityEngine.Object.DontDestroyOnLoad(mSuitEffect);
-		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
+		DontDestroyOnLoad(mBackground.transform.gameObject);
+		DontDestroyOnLoad(mSuitEffect.transform.gameObject);
+		DontDestroyOnLoad(mInstance.transform.gameObject);
+		DontDestroyOnLoad(this.transform.gameObject);
+		DontDestroyOnLoad(mInstance);
 	}
 
-	public static void GUIEnable(bool bEnable)
-	{
-		if (bEnable && (mInstance.mFlags & 1) != 0)
-		{
+	public static void GUIEnable(bool bEnable) {
+		if (bEnable && (mInstance.mFlags & 1) != 0) {
 			GUI.enabled = false;
-		}
-		else
-		{
+		} else {
 			GUI.enabled = bEnable;
 		}
 	}
 
-	public static void GUIEnableOverride(bool bEnable)
-	{
+	public static void GUIEnableOverride(bool bEnable) {
 		GUI.enabled = bEnable;
 	}
 
-	public static void DrawProgressBar(Rect Area, float val, float minVal, float maxVal, BarDirection Type, GUIStyle BackgroundStyle, GUIStyle BarStyle)
-	{
-		if (BarStyle != null)
-		{
+	public static void DrawProgressBar(Rect Area, float val, float minVal, float maxVal, BarDirection Type, GUIStyle BackgroundStyle, GUIStyle BarStyle) {
+		if (BarStyle != null) {
 			Rect position = Area;
 			float num = Mathf.Clamp((val - minVal) / (maxVal - minVal), 0f, 1f);
-			if (BackgroundStyle != null)
-			{
+			if (BackgroundStyle != null) {
 				Color color = GUI.color;
 				GUI.color = Color.white;
 				GUI.Box(position, string.Empty, BackgroundStyle);
 				GUI.color = color;
 			}
-			switch (Type)
-			{
-			case BarDirection.Left:
-			{
-				float num3 = Area.width - Area.width * num;
-				Area.x += num3;
-				Area.width -= num3;
-				GUI.BeginGroup(Area);
-				GUI.Box(new Rect(0f - num3, 0f, position.width, position.height), GUIContent.none, BarStyle);
-				GUI.EndGroup();
-				break;
-			}
-			case BarDirection.Right:
-				Area.width *= num;
-				GUI.BeginGroup(Area);
-				GUI.Box(new Rect(0f, 0f, position.width, position.height), GUIContent.none, BarStyle);
-				GUI.EndGroup();
-				break;
-			case BarDirection.Up:
-			{
-				float num2 = Area.height - Area.height * num;
-				Area.y += num2;
-				Area.height -= num2;
-				GUI.BeginGroup(Area);
-				GUI.Box(new Rect(0f, 0f - num2, position.width, position.height), GUIContent.none, BarStyle);
-				GUI.EndGroup();
-				break;
-			}
-			case BarDirection.Down:
-				Area.height *= num;
-				GUI.BeginGroup(Area);
-				GUI.Box(new Rect(0f, 0f, position.width, position.height), GUIContent.none, BarStyle);
-				GUI.EndGroup();
-				break;
+			switch (Type) {
+				case BarDirection.Left: {
+					float num3 = Area.width - Area.width * num;
+					Area.x += num3;
+					Area.width -= num3;
+					GUI.BeginGroup(Area);
+					GUI.Box(new Rect(0f - num3, 0f, position.width, position.height), GUIContent.none, BarStyle);
+					GUI.EndGroup();
+					break;
+				}
+				case BarDirection.Right:
+					Area.width *= num;
+					GUI.BeginGroup(Area);
+					GUI.Box(new Rect(0f, 0f, position.width, position.height), GUIContent.none, BarStyle);
+					GUI.EndGroup();
+					break;
+				case BarDirection.Up: {
+					float num2 = Area.height - Area.height * num;
+					Area.y += num2;
+					Area.height -= num2;
+					GUI.BeginGroup(Area);
+					GUI.Box(new Rect(0f, 0f - num2, position.width, position.height), GUIContent.none, BarStyle);
+					GUI.EndGroup();
+					break;
+				}
+				case BarDirection.Down:
+					Area.height *= num;
+					GUI.BeginGroup(Area);
+					GUI.Box(new Rect(0f, 0f, position.width, position.height), GUIContent.none, BarStyle);
+					GUI.EndGroup();
+					break;
 			}
 		}
 	}
 
-	public static void RenderModelToTexture(RenderTexture Texture, float FoV, Vector3 Position, Vector3 Rotation, Transform Obj, Color ClearColor)
-	{
+	public static void RenderModelToTexture(RenderTexture Texture, float FoV, Vector3 Position, Vector3 Rotation, Transform Obj, Color ClearColor) {
 		Obj.gameObject.SetActiveRecursively(state: true);
 		Obj.parent = mInstance.mModelRenderer.gameObject.transform;
 		Obj.transform.localPosition = Position;
@@ -323,16 +293,12 @@ public class GUIUtil : MonoBehaviour
 		Obj.gameObject.SetActiveRecursively(state: false);
 	}
 
-	public static void RenderModelsToTexture(RenderTexture Texture, float FoV, Vector3[] Position, Vector3[] Rotation, Transform[] Obj, Color ClearColor)
-	{
-		if (Position.Length != Rotation.Length && Rotation.Length != Obj.Length)
-		{
+	public static void RenderModelsToTexture(RenderTexture Texture, float FoV, Vector3[] Position, Vector3[] Rotation, Transform[] Obj, Color ClearColor) {
+		if (Position.Length != Rotation.Length && Rotation.Length != Obj.Length) {
 			return;
 		}
-		for (int i = 0; i < Obj.Length; i++)
-		{
-			if (Obj[i] != null)
-			{
+		for (int i = 0; i < Obj.Length; i++) {
+			if (Obj[i] != null) {
 				Obj[i].gameObject.SetActiveRecursively(state: true);
 				Obj[i].parent = mInstance.mModelRenderer.gameObject.transform;
 				Obj[i].transform.localPosition = Position[i];
@@ -343,18 +309,15 @@ public class GUIUtil : MonoBehaviour
 		mInstance.mModelRenderer.targetTexture = Texture;
 		mInstance.mModelRenderer.fieldOfView = FoV;
 		mInstance.mModelRenderer.Render();
-		for (int j = 0; j < Obj.Length; j++)
-		{
-			if (Obj[j] != null)
-			{
+		for (int j = 0; j < Obj.Length; j++) {
+			if (Obj[j] != null) {
 				Obj[j].parent = null;
 				Obj[j].gameObject.SetActiveRecursively(state: false);
 			}
 		}
 	}
 
-	public static void RenderModelToGUI(Rect RenderArea, float FoV, Vector3 Position, Vector3 Rotation, Transform Obj, Color ClearColor)
-	{
+	public static void RenderModelToGUI(Rect RenderArea, float FoV, Vector3 Position, Vector3 Rotation, Transform Obj, Color ClearColor) {
 		Obj.gameObject.SetActiveRecursively(state: true);
 		Obj.parent = mInstance.mModelRenderer.gameObject.transform;
 		Obj.transform.localPosition = Position;
@@ -367,16 +330,12 @@ public class GUIUtil : MonoBehaviour
 		Obj.gameObject.SetActiveRecursively(state: false);
 	}
 
-	public static void RenderModelsToGUI(Rect RenderArea, float FoV, Vector3[] Position, Vector3[] Rotation, Transform[] Obj, Color ClearColor)
-	{
-		if (Position.Length != Rotation.Length && Rotation.Length != Obj.Length)
-		{
+	public static void RenderModelsToGUI(Rect RenderArea, float FoV, Vector3[] Position, Vector3[] Rotation, Transform[] Obj, Color ClearColor) {
+		if (Position.Length != Rotation.Length && Rotation.Length != Obj.Length) {
 			return;
 		}
-		for (int i = 0; i < Obj.Length; i++)
-		{
-			if (Obj[i] != null)
-			{
+		for (int i = 0; i < Obj.Length; i++) {
+			if (Obj[i] != null) {
 				Obj[i].gameObject.SetActiveRecursively(state: true);
 				Obj[i].parent = mInstance.mModelRenderer.gameObject.transform;
 				Obj[i].transform.localPosition = Position[i];
@@ -387,275 +346,215 @@ public class GUIUtil : MonoBehaviour
 		mInstance.mModelRenderer.rect = RenderArea;
 		mInstance.mModelRenderer.fieldOfView = FoV;
 		mInstance.mModelRenderer.Render();
-		for (int j = 0; j < Obj.Length; j++)
-		{
-			if (Obj[j] != null)
-			{
+		for (int j = 0; j < Obj.Length; j++) {
+			if (Obj[j] != null) {
 				Obj[j].parent = null;
 				Obj[j].gameObject.SetActiveRecursively(state: false);
 			}
 		}
 	}
 
-	public void LateUpdate()
-	{
+	public void LateUpdate() {
 		mInstance.mFlags &= -2;
 	}
 
-	public void OnGUI()
-	{
+	public void OnGUI() {
 		mInstance = this;
 		MessageBox.DrawMessageQueue();
 	}
 
-	public static void OnDrawWindow()
-	{
+	public static void OnDrawWindow() {
 		mInstance.mFlags |= 1;
-		if (MessageBox.mMessageBox.Queuesize == 0)
-		{
+		if (MessageBox.mMessageBox.Queuesize == 0) {
 			GUIEnableOverride(bEnable: true);
-		}
-		else
-		{
+		} else {
 			GUIEnable(bEnable: true);
 		}
 	}
 
-	public static void DrawNewIcon(Rect ObjectRect)
-	{
+	public static void DrawNewIcon(Rect ObjectRect) {
 		float num = ObjectRect.width / 2f + ObjectRect.x;
 		GUI.color = Color.red;
 		GUI.Box(new Rect(num - 20f, ObjectRect.y - 7f, 40f, 14f), "NEW!", mInstance.mSharedSkin.box);
 		GUI.color = Color.white;
 	}
 
-	public static void DrawLoadingAnim(Rect pos, int index)
-	{
+	public static void DrawLoadingAnim(Rect pos, int index) {
 		LoadingAnimation loadingAnimation = mInstance.LoadingAnims[index];
 		DrawAnimatedTexture(pos, loadingAnimation.Texture, loadingAnimation.Frames, loadingAnimation.FPS, MirrorX: false, MirrorY: false);
 	}
 
-	public static void DrawAnimatedTextureFrame(Rect pos, Texture2D texture, int frames, int frame, bool MirrorX, bool MirrorY)
-	{
+	public static void DrawAnimatedTextureFrame(Rect pos, Texture2D texture, int frames, int frame, bool MirrorX, bool MirrorY) {
 		GUI.BeginGroup(pos);
-		if (MirrorX)
-		{
+		if (MirrorX) {
 			pos.x = pos.width * (float)frames - (float)frame * pos.width;
 			pos.width = (0f - pos.width) * (float)frames;
-		}
-		else
-		{
+		} else {
 			pos.x = (float)(-frame) * pos.width;
 			pos.width *= frames;
 		}
-		if (MirrorY)
-		{
+		if (MirrorY) {
 			pos.y = pos.height;
 			pos.height = 0f - pos.height;
-		}
-		else
-		{
+		} else {
 			pos.y = 0f;
 		}
 		GUI.DrawTexture(pos, texture);
 		GUI.EndGroup();
 	}
 
-	public static void DrawAnimatedTexture(Rect pos, Texture2D texture, int frames, int FPS, bool MirrorX, bool MirrorY)
-	{
+	public static void DrawAnimatedTexture(Rect pos, Texture2D texture, int frames, int FPS, bool MirrorX, bool MirrorY) {
 		DrawAnimatedTextureFrame(pos, texture, frames, (int)(Time.realtimeSinceStartup * (float)FPS) % frames, MirrorX, MirrorY);
 	}
 
-	public static void BeginScaleGroup(Rect rect, Vector2 Angle, Vector3 Scale)
-	{
+	public static void BeginScaleGroup(Rect rect, Vector2 Angle, Vector3 Scale) {
 		Vector3 vector = new Vector3(Mathf.Abs(Scale.x), Mathf.Abs(Scale.y), Mathf.Abs(Scale.z));
 		Angle.x += (Screen.width - 900) / 2;
 		Angle.y += (Screen.height - 600) / 2;
 		GUI.BeginGroup(new Rect(rect.x / vector.x, rect.y / vector.y, (!(vector.x >= 1f)) ? (rect.width / vector.x) : (rect.width * vector.x), (!(vector.y >= 1f)) ? (rect.height / vector.y) : (rect.height * vector.y)));
 		tempMatrix = GUI.matrix;
 		Vector3 zero = Vector3.zero;
-		if (Scale.x > 0f)
-		{
+		if (Scale.x > 0f) {
 			zero.x = (1f - Scale.x) * (Angle.x + rect.width / 2f);
-		}
-		else
-		{
+		} else {
 			zero.x = rect.x * 2f + rect.width + (-1f - Scale.x) * (0f - Angle.x + rect.width / 2f);
 		}
-		if (Scale.y > 0f)
-		{
+		if (Scale.y > 0f) {
 			zero.y = (1f - Scale.y) * (Angle.y + rect.height / 2f);
-		}
-		else
-		{
+		} else {
 			zero.y = rect.y * 2f + rect.height + (-1f - Scale.y) * (0f - Angle.y + rect.height / 2f);
 		}
 		GUI.matrix *= Matrix4x4.TRS(zero, Quaternion.identity, Scale);
 	}
 
-	public static void EndScaleGroup()
-	{
+	public static void EndScaleGroup() {
 		GUI.matrix = tempMatrix;
 		GUI.EndGroup();
 	}
 
-	public static GUIState Button(Rect rect, GUIContent content)
-	{
+	public static GUIState Button(Rect rect, GUIContent content) {
 		return Button(rect, content, GUI.skin.button);
 	}
 
-	public static GUIState Button(Rect rect, string text)
-	{
+	public static GUIState Button(Rect rect, string text) {
 		return Button(rect, new GUIContent(text), GUI.skin.button);
 	}
 
-	public static GUIState Button(Rect rect, Texture image)
-	{
+	public static GUIState Button(Rect rect, Texture image) {
 		return Button(rect, new GUIContent(image), GUI.skin.button);
 	}
 
-	public static GUIState Button(Rect rect, GUIContent content, GUIStyle style)
-	{
+	public static GUIState Button(Rect rect, GUIContent content, GUIStyle style) {
 		int num = 0;
-		if (!GUI.enabled)
-		{
+		if (!GUI.enabled) {
 			num |= 1;
 		}
-		if (GUI.Button(rect, content, style))
-		{
+		if (GUI.Button(rect, content, style)) {
 			return (GUIState)(num | 8);
 		}
-		if (rect.Contains(Event.current.mousePosition))
-		{
+		if (rect.Contains(Event.current.mousePosition)) {
 			num = ((!Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2)) ? (num | 2) : (num | 4));
 		}
 		return (GUIState)num;
 	}
 
-	public static GUIState Button(Rect rect, string text, GUIStyle style)
-	{
+	public static GUIState Button(Rect rect, string text, GUIStyle style) {
 		return Button(rect, new GUIContent(text), style);
 	}
 
-	public static GUIState Button(Rect rect, Texture image, GUIStyle style)
-	{
+	public static GUIState Button(Rect rect, Texture image, GUIStyle style) {
 		return Button(rect, new GUIContent(image), style);
 	}
 
-	public static GUIState RepeatButton(Rect rect, GUIContent content)
-	{
+	public static GUIState RepeatButton(Rect rect, GUIContent content) {
 		return RepeatButton(rect, content, GUI.skin.button);
 	}
 
-	public static GUIState RepeatButton(Rect rect, string text)
-	{
+	public static GUIState RepeatButton(Rect rect, string text) {
 		return RepeatButton(rect, new GUIContent(text), GUI.skin.button);
 	}
 
-	public static GUIState RepeatButton(Rect rect, Texture image)
-	{
+	public static GUIState RepeatButton(Rect rect, Texture image) {
 		return RepeatButton(rect, new GUIContent(image), GUI.skin.button);
 	}
 
-	public static GUIState RepeatButton(Rect rect, GUIContent content, GUIStyle style)
-	{
+	public static GUIState RepeatButton(Rect rect, GUIContent content, GUIStyle style) {
 		int num = 0;
-		if (!GUI.enabled)
-		{
+		if (!GUI.enabled) {
 			num |= 1;
 		}
-		if (GUI.RepeatButton(rect, content, style))
-		{
+		if (GUI.RepeatButton(rect, content, style)) {
 			return (GUIState)(num | 8);
 		}
-		if (rect.Contains(Event.current.mousePosition))
-		{
+		if (rect.Contains(Event.current.mousePosition)) {
 			num |= 2;
 		}
 		return (GUIState)num;
 	}
 
-	public static GUIState RepeatButton(Rect rect, string text, GUIStyle style)
-	{
+	public static GUIState RepeatButton(Rect rect, string text, GUIStyle style) {
 		return RepeatButton(rect, new GUIContent(text), style);
 	}
 
-	public static GUIState RepeatButton(Rect rect, Texture image, GUIStyle style)
-	{
+	public static GUIState RepeatButton(Rect rect, Texture image, GUIStyle style) {
 		return RepeatButton(rect, new GUIContent(image), style);
 	}
 
-	public static GUIState Toggle(Rect rect, bool value, GUIContent content)
-	{
+	public static GUIState Toggle(Rect rect, bool value, GUIContent content) {
 		return Toggle(rect, value, content, GUI.skin.button);
 	}
 
-	public static GUIState Toggle(Rect rect, bool value, string text)
-	{
+	public static GUIState Toggle(Rect rect, bool value, string text) {
 		return Toggle(rect, value, new GUIContent(text), GUI.skin.button);
 	}
 
-	public static GUIState Toggle(Rect rect, bool value, Texture image)
-	{
+	public static GUIState Toggle(Rect rect, bool value, Texture image) {
 		return Toggle(rect, value, new GUIContent(image), GUI.skin.button);
 	}
 
-	public static GUIState Toggle(Rect rect, bool value, GUIContent content, GUIStyle style)
-	{
+	public static GUIState Toggle(Rect rect, bool value, GUIContent content, GUIStyle style) {
 		int num = 0;
-		if (!GUI.enabled)
-		{
+		if (!GUI.enabled) {
 			num |= 1;
 		}
 		bool flag = GUI.Toggle(rect, value, content, style);
 		num = ((!flag) ? (num | 0x20) : (num | 0x10));
-		if (flag != value)
-		{
+		if (flag != value) {
 			return (GUIState)(num | 8);
 		}
-		if (rect.Contains(Event.current.mousePosition))
-		{
+		if (rect.Contains(Event.current.mousePosition)) {
 			num = ((!Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2)) ? (num | 2) : (num | 4));
 		}
 		return (GUIState)num;
 	}
 
-	public static GUIState Toggle(Rect rect, bool value, string text, GUIStyle style)
-	{
+	public static GUIState Toggle(Rect rect, bool value, string text, GUIStyle style) {
 		return Toggle(rect, value, new GUIContent(text), style);
 	}
 
-	public static GUIState Toggle(Rect rect, bool value, Texture image, GUIStyle style)
-	{
+	public static GUIState Toggle(Rect rect, bool value, Texture image, GUIStyle style) {
 		return Toggle(rect, value, new GUIContent(image), style);
 	}
 
-	public static GUIState CircleButton(Circle circ, Rect rect, GUIContent content)
-	{
+	public static GUIState CircleButton(Circle circ, Rect rect, GUIContent content) {
 		return CircleButton(circ, rect, content, GUI.skin.button);
 	}
 
-	public static GUIState CircleButton(Circle circ, Rect rect, string text)
-	{
+	public static GUIState CircleButton(Circle circ, Rect rect, string text) {
 		return CircleButton(circ, rect, new GUIContent(text), GUI.skin.button);
 	}
 
-	public static GUIState CircleButton(Circle circ, Rect rect, Texture image)
-	{
+	public static GUIState CircleButton(Circle circ, Rect rect, Texture image) {
 		return CircleButton(circ, rect, new GUIContent(image), GUI.skin.button);
 	}
 
-	public static GUIState CircleButton(Circle circ, Rect rect, GUIContent content, GUIStyle style)
-	{
+	public static GUIState CircleButton(Circle circ, Rect rect, GUIContent content, GUIStyle style) {
 		int num = 0;
-		if (!GUI.enabled)
-		{
+		if (!GUI.enabled) {
 			num |= 1;
 		}
-		if (!rect.Contains(Event.current.mousePosition))
-		{
-			if (Event.current.type == EventType.Repaint)
-			{
+		if (!rect.Contains(Event.current.mousePosition)) {
+			if (Event.current.type == EventType.Repaint) {
 				style.Draw(rect, content, isHover: false, isActive: false, on: false, hasKeyboardFocus: false);
 			}
 			return (GUIState)num;
@@ -663,53 +562,41 @@ public class GUIUtil : MonoBehaviour
 		GUI.BeginGroup(rect);
 		bool flag = circ.Contains(Event.current.mousePosition);
 		GUI.EndGroup();
-		if (flag)
-		{
+		if (flag) {
 			num = (int)Button(rect, content, style);
-		}
-		else if (Event.current.type == EventType.Repaint)
-		{
+		} else if (Event.current.type == EventType.Repaint) {
 			style.Draw(rect, content, isHover: false, isActive: false, on: false, hasKeyboardFocus: false);
 		}
 		return (GUIState)num;
 	}
 
-	public static GUIState CircleButton(Circle circ, Rect rect, string text, GUIStyle style)
-	{
+	public static GUIState CircleButton(Circle circ, Rect rect, string text, GUIStyle style) {
 		return CircleButton(circ, rect, new GUIContent(text), style);
 	}
 
-	public static GUIState CircleButton(Circle circ, Rect rect, Texture image, GUIStyle style)
-	{
+	public static GUIState CircleButton(Circle circ, Rect rect, Texture image, GUIStyle style) {
 		return CircleButton(circ, rect, new GUIContent(image), style);
 	}
 
-	public static GUIState CustomButton(Triangle[] Tris, Rect rect, GUIContent content)
-	{
+	public static GUIState CustomButton(Triangle[] Tris, Rect rect, GUIContent content) {
 		return CustomButton(Tris, rect, content, GUI.skin.button);
 	}
 
-	public static GUIState CustomButton(Triangle[] Tris, Rect rect, string text)
-	{
+	public static GUIState CustomButton(Triangle[] Tris, Rect rect, string text) {
 		return CustomButton(Tris, rect, new GUIContent(text), GUI.skin.button);
 	}
 
-	public static GUIState CustomButton(Triangle[] Tris, Rect rect, Texture image)
-	{
+	public static GUIState CustomButton(Triangle[] Tris, Rect rect, Texture image) {
 		return CustomButton(Tris, rect, new GUIContent(image), GUI.skin.button);
 	}
 
-	public static GUIState CustomButton(Triangle[] Tris, Rect rect, GUIContent content, GUIStyle style)
-	{
+	public static GUIState CustomButton(Triangle[] Tris, Rect rect, GUIContent content, GUIStyle style) {
 		int num = 0;
-		if (!GUI.enabled)
-		{
+		if (!GUI.enabled) {
 			num |= 1;
 		}
-		if (!rect.Contains(Event.current.mousePosition))
-		{
-			if (Event.current.type == EventType.Repaint)
-			{
+		if (!rect.Contains(Event.current.mousePosition)) {
+			if (Event.current.type == EventType.Repaint) {
 				style.Draw(rect, content, isHover: false, isActive: false, on: false, hasKeyboardFocus: false);
 			}
 			return (GUIState)num;
@@ -720,38 +607,30 @@ public class GUIUtil : MonoBehaviour
 		float x = mousePosition.x / rect.width;
 		Vector2 mousePosition2 = Event.current.mousePosition;
 		Vector2 v = new Vector2(x, mousePosition2.y / rect.height);
-		foreach (Triangle triangle in Tris)
-		{
-			if (triangle.Contains(v))
-			{
+		foreach (Triangle triangle in Tris) {
+			if (triangle.Contains(v)) {
 				flag = true;
 				break;
 			}
 		}
 		GUI.EndGroup();
-		if (flag)
-		{
+		if (flag) {
 			num = (int)Button(rect, content, style);
-		}
-		else if (Event.current.type == EventType.Repaint)
-		{
+		} else if (Event.current.type == EventType.Repaint) {
 			style.Draw(rect, content, isHover: false, isActive: false, on: false, hasKeyboardFocus: false);
 		}
 		return (GUIState)num;
 	}
 
-	public static GUIState CustomButton(Triangle[] Tris, Rect rect, string text, GUIStyle style)
-	{
+	public static GUIState CustomButton(Triangle[] Tris, Rect rect, string text, GUIStyle style) {
 		return CustomButton(Tris, rect, new GUIContent(text), style);
 	}
 
-	public static GUIState CustomButton(Triangle[] Tris, Rect rect, Texture image, GUIStyle style)
-	{
+	public static GUIState CustomButton(Triangle[] Tris, Rect rect, Texture image, GUIStyle style) {
 		return CustomButton(Tris, rect, new GUIContent(image), style);
 	}
 
-	public static string GetRandomTip()
-	{
+	public static string GetRandomTip() {
 		return Tips[UnityEngine.Random.Range(0, Tips.Length)];
 	}
 }

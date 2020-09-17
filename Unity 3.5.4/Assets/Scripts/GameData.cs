@@ -7,16 +7,13 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class GameData
-{
-	public enum Build
-	{
+public class GameData {
+	public enum Build {
 		DEBUG = 1,
 		PRODUCTION
 	}
 
-	public enum PlayState
-	{
+	public enum PlayState {
 		GAME_LOADING,
 		GAME_IN_QUEUE,
 		GAME_STARTED,
@@ -245,11 +242,14 @@ public class GameData
 
 	public static string version;
 
-	public static Build MATCH_MODE = Build.PRODUCTION;
+	//public static Build MATCH_MODE = Build.PRODUCTION;
+	public static Build MATCH_MODE = Build.DEBUG;
 
 	public static string MATCH_SERVER_IP = "127.0.0.1";
 
-	public static string SERVICE_PATH = "http://10.189.49.72:8081/exonaut";
+	// TODO: replace with server service path
+	//public static string SERVICE_PATH = "http://10.189.49.72:8081/exonaut";
+	public static string SERVICE_PATH = "file://" + Application.dataPath + "/Resources/temp/";
 
 	public static string SERVER_PATH = "http://cn-internal/games/exonaut";
 
@@ -1001,6 +1001,9 @@ public class GameData
 		}
 	}
 
+	/// <summary>
+	/// Banzai is 1, Atlas is 2
+	/// </summary>
 	public static int MyFactionId
 	{
 		get

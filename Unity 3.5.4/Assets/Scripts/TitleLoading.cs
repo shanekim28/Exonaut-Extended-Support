@@ -341,6 +341,7 @@ public class TitleLoading : MonoBehaviour
 
 	private void playAsGuest()
 	{
+		/* TODO: Add tutorial back in
 		if ((GameData.MATCH_MODE != GameData.Build.DEBUG && !PlayerPrefs.HasKey("LastTraining")) || (GameData.MATCH_MODE == GameData.Build.DEBUG && Input.GetKey(KeyCode.Space)))
 		{
 			setPause(60, playAsNewPlayer);
@@ -358,6 +359,12 @@ public class TitleLoading : MonoBehaviour
 		{
 			setPause(60, playAsNewPlayer);
 		}
+		*/
+
+		// Temporary
+		mStatus = "Please wait.";
+		Application.LoadLevel("GameHome");
+		state = waitForLogin;
 	}
 
 	private void waitForLogin()
@@ -1200,7 +1207,9 @@ public class TitleLoading : MonoBehaviour
 		storyTextBGRect.width = width4 * (1f + Mathf.Max(0.25f * (1f - color4.a), 0f));
 		storyTextBGRect.x = (900f - storyTextBGRect.width) / 2f;
 		GUI.DrawTexture(storyTextBGRect, StoryExoSymbol);
-		if (StoryTimer > 6.5f)
+		if (StoryTimer > 0)
+		// Temporary disable
+		// if (StoryTimer > 6.5f)
 		{
 			GUI.color = new Color(1f, 1f, 1f, Mathf.Min(1f, StoryTimer - 6.5f));
 			if (bIsGuest)
@@ -1223,11 +1232,11 @@ public class TitleLoading : MonoBehaviour
 				{
 					b = "GUEST";
 					GUIUtil.PlayGUISound(GUIUtil.GUISoundClips.TT_Global_Button_Press);
-					if (GameData.MATCH_MODE == GameData.Build.DEBUG && Input.GetKey(KeyCode.F1))
+					if (GameData.MATCH_MODE == GameData.Build.DEBUG && Input.GetKey(KeyCode.Q))
 					{
 						GameData.MyFactionId = 1;
 					}
-					else if (GameData.MATCH_MODE == GameData.Build.DEBUG && Input.GetKey(KeyCode.F2))
+					else if (GameData.MATCH_MODE == GameData.Build.DEBUG && Input.GetKey(KeyCode.W))
 					{
 						GameData.MyFactionId = 2;
 					}

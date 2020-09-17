@@ -35,7 +35,7 @@ public class AssetLoader : MonoBehaviour
 			SuitAsset Suit = mInstance.mCurrentLoading as SuitAsset;
 			Exosuit suitToLoad = GameData.getExosuit(Suit.mSuitID);
 			myWWW = new WWW(GameData.BUNDLE_PATH + Suit.myFilename);
-			Logger.trace("LoadSuitAsset " + myWWW.url);
+			// Logger.trace("LoadSuitAsset " + myWWW.url);
 			yield return myWWW;
 			if (myWWW.error == null)
 			{

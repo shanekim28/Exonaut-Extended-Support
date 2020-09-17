@@ -125,7 +125,9 @@ public class TrackerScript : MonoBehaviour
 
 	private void postMetric()
 	{
-		string text = GameData.SERVICE_PATH + "/ExonautMetric";
+		// Temporary
+		//string text = GameData.SERVICE_PATH + "/ExonautMetric";
+		string text = "file://" + Application.dataPath + "/Resources/temp/ExonautMetric";
 		WWWForm wWWForm = new WWWForm();
 		wWWForm.AddField("SessionID", GameData.MyExonautToken);
 		wWWForm.AddField("ID", GameData.MyExonautId);

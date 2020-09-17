@@ -109,7 +109,11 @@ public class DynamicOptions : MonoBehaviour
 
 	private string curhover = string.Empty;
 
-	private void Start()
+	void Awake() {
+		DontDestroyOnLoad(this.transform.gameObject);
+	}
+
+	void Start()
 	{
 		Application.ExternalEval("function onfoc(){GetUnity().SendMessage('WEBCONNECTOR','BrowserFocus','...');}");
 		Application.ExternalEval("function onblr(){GetUnity().SendMessage('WEBCONNECTOR','BrowserBlur','...');}");
@@ -117,7 +121,7 @@ public class DynamicOptions : MonoBehaviour
 		Application.ExternalEval("window.onblur=onblr;");
 		LoadOptions();
 		mSharedSkin = GUIUtil.mInstance.mSharedSkin;
-		Object.DontDestroyOnLoad(base.gameObject);
+        
 		Screen.showCursor = false;
 		ControlsRect = new Rect(20f, 50f, 280f, 360f);
 		SoundRect = new Rect(ControlsRect.x + ControlsRect.width + 30f, 50f, 330f, 95f);

@@ -155,8 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecba22beacd42e44d8a364503c8468ae, type: 1}
   m_Name: 
   mCursorTexture: {fileID: 2800000, guid: c5ab7f9b61cc9a248bb1f7cbc9c1ae1f, type: 1}
-  width: 0
-  height: 0
+  width: 20
+  height: 20
   bCanFullscreen: 0
   ControlsRect:
     serializedVersion: 2
@@ -287,14 +287,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33f0f75d70d72584cbc23cfd00b387c3, type: 1}
   m_Name: 
-  mSharedSkin: {fileID: 0}
-  mTabSkin: {fileID: 0}
-  mShowcaseSkin: {fileID: 0}
-  mQueueSkin: {fileID: 0}
-  mStatsSkin: {fileID: 0}
-  mModelRenderer: {fileID: 0}
-  mBackground: {fileID: 0}
-  mSuitEffect: {fileID: 0}
+  mSharedSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
+  mTabSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
+  mShowcaseSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
+  mQueueSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
+  mStatsSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
+  mModelRenderer: {fileID: 797304350}
+  mBackgroundPrefab: {fileID: 400000, guid: 32c76fb0da6d78c41ba8a80a91af209a, type: 2}
+  mSuitEffectPrefab: {fileID: 400004, guid: cb09738b29c62df4f95d2d7538f5806d, type: 2}
   LoadingAnims: []
   sspci: {x: 0, y: 0}
 --- !u!114 &340367409
@@ -774,14 +774,14 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0
-    height: 0
+    width: 900
+    height: 600
   StoryTextBGRect:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0
-    height: 0
+    width: 900
+    height: 600
   StoryTitleRect:
     serializedVersion: 2
     x: 0

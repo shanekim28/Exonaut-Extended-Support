@@ -164,7 +164,8 @@ public class TabShowcase
 	{
 		mSharedSkin = GUIUtil.mInstance.mSharedSkin;
 		mShowcaseSkin = GUIUtil.mInstance.mShowcaseSkin;
-		whitebox = mSharedSkin.GetStyle("whitebox");
+		// Temporary disable
+		// whitebox = mSharedSkin.GetStyle("whitebox");
 	}
 
 	public void UpdateScreenSpace(Rect screenSpace)
