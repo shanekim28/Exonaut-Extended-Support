@@ -110,6 +110,7 @@ public class UrlLocator : MonoBehaviour
 			Logger.trace("[UrlLocator::StartUrlLocator] - attempt to connect to director number " + attempt);
 		} while (www.error != null && 5 > attempt);
 
+		// Temporary
 		goto force_success;
 
 		if (www.error == null)
@@ -139,7 +140,7 @@ public class UrlLocator : MonoBehaviour
 		complete = true;
 
 	force_success:
-		ip = "157.166.228.34";
+		ip = "localhost";
 		port = 9933;
 		success = true;
 		complete = true;

@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleLoading.unity
   - enabled: 1
     path: Assets/Scenes/GameHome.unity
+  - enabled: 1
+    path: Assets/Scenes/GameBattleQueue.unity

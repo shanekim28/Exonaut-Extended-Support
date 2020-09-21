@@ -24,9 +24,9 @@ public class TabHome
 	public Vector3[] ModelPositions = new Vector3[4]
 	{
 		new Vector3(-6.75f, -6.25f, 27.5f),
+		new Vector3(-6.5f, -7.7f, 28.5f),
 		new Vector3(-6.5f, -6.25f, 28.5f),
-		new Vector3(-6.5f, -6.25f, 28.5f),
-		new Vector3(0.5f, 0f, 35f)
+		new Vector3(0.5f, 0f, 40f)
 	};
 
 	public Vector3[] ModelRotations = new Vector3[4]

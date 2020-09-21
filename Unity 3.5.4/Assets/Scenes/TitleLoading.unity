@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78e50dd50e918fa49bd973e11e0bae76, type: 1}
   m_Name: 
-  serverName: 10.189.49.72
+  serverName: localhost
   m_gameModeStr: 
   m_qTime: 0
   urlLocator: {fileID: 0}
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   mCursorTexture: {fileID: 2800000, guid: c5ab7f9b61cc9a248bb1f7cbc9c1ae1f, type: 1}
   width: 20
-  height: 20
+  height: 40
   bCanFullscreen: 0
   ControlsRect:
     serializedVersion: 2
@@ -290,10 +290,10 @@ MonoBehaviour:
   mSharedSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
   mTabSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
   mShowcaseSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
-  mQueueSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
+  mQueueSkin: {fileID: 603898415, guid: c1c464ece3eaf234290f6808c2922f99, type: 2}
   mStatsSkin: {fileID: 11400000, guid: 505bd7d7204f4224bb09bcba254d264a, type: 2}
   mModelRenderer: {fileID: 797304350}
-  mBackgroundPrefab: {fileID: 400000, guid: 32c76fb0da6d78c41ba8a80a91af209a, type: 2}
+  mBackgroundPrefab: {fileID: 400028, guid: 4ab49e2b572cde040a5b2c51dbeb3ab0, type: 2}
   mSuitEffectPrefab: {fileID: 400004, guid: cb09738b29c62df4f95d2d7538f5806d, type: 2}
   LoadingAnims: []
   sspci: {x: 0, y: 0}

@@ -1,0 +1,173 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: QueueFirstUse
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -1.78173101}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68ea2dd07cd24e4d97339c7a239aafc, type: 1}
+  m_Name: 
+  bInFrontOfOptions: 0
+  mFrames:
+  - mCharImage: 0
+    mBoxAnchor: 2
+    mBoxSize:
+      _x: Screen.width
+      _y: 146
+      PreCalc: {x: 0, y: 0}
+    mText: Need a refresher on the basics of exosuit combat? You've come to the right
+      place. Our expert trainers will teach you how to use all the weapons and tactics
+      you need to win.
+    mFocusRect:
+      x: 
+      y: 
+      width: 
+      height: 
+    mRectType: 0
+    mNextButton: 0
+    mDrawBackdrop: 1
+    mContextualHelp: 0
+    mAction: 0
+    mActionSpecific: 
+    ActionCount: 1
+  mCurrentFrame: 0
+  mArrowTexture:
+  - {fileID: 2800000, guid: a7ec45296bf5fed45bd9f13a45ba7cfe, type: 1}
+  - {fileID: 2800000, guid: f8cbf8a45d5b90445a1cd8f82ba0e648, type: 1}
+  mBackground:
+  - {fileID: 2800000, guid: 46e4223bd95da6548b933a2b497964dc, type: 1}
+  - {fileID: 2800000, guid: 36975416c249394458d6188a31c9e4cd, type: 1}
+  - {fileID: 2800000, guid: fb5b21002fa66e3489a102117a873851, type: 1}
+  - {fileID: 2800000, guid: 056e8a7e4ecaa704a80b0494a676b76f, type: 1}
+  - {fileID: 2800000, guid: 4d652837dba46b14db5965789a8882b0, type: 1}
+  - {fileID: 2800000, guid: 6ec3a4e0bc28b0043ac779cfaba3658e, type: 1}
+  - {fileID: 2800000, guid: 2a4aebd0b6dda2942a6904e8d27b5ec3, type: 1}
+  - {fileID: 2800000, guid: b7404b5ebe8fcec4096e04eab88e282a, type: 1}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: c995590d26217224fab71ed6317442b7, type: 1}
+  mAvatarName:
+  - {fileID: 2800000, guid: 7cb238772c646244b96dbf815794844b, type: 1}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 582aac1398d5588478f077950ca08458, type: 1}
+  - {fileID: 2800000, guid: f6c1ea2baa3107144a30ac541117b301, type: 1}
+  - {fileID: 2800000, guid: f31c5b3a9904a3c4c9fe113c51f2a6bf, type: 1}
+  - {fileID: 2800000, guid: d4cf6b409121492479666dbccada4a9a, type: 1}
+  - {fileID: 2800000, guid: 097081edc47144c4295182984d027807, type: 1}
+  - {fileID: 2800000, guid: 2ad38ec86a81ec045983a4505e74db99, type: 1}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: d4c1329a105371e4ba06915d845e5944, type: 1}
+  mChatBubble: {fileID: 2800000, guid: 636ac5e46cf3d8149a6b4efb4f645b8b, type: 1}
+  mHeaderTexture: {fileID: 2800000, guid: ea7fb41f659a5114590aa16a3ff4387c, type: 1}
+  mBGTexture: {fileID: 2800000, guid: a11c7cf874293ac478680b49c87cfec6, type: 1}
+  mSkin: {fileID: 0}
+  Box:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 0}
+    m_ImagePosition: 0
+    m_Alignment: 0
+    m_WordWrap: 0
+    m_TextClipping: 1
+    m_ContentOffset: {x: 0, y: 0}
+    m_ClipOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_FontSize: 0
+    m_FontStyle: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
+  TextScroll: 0
+  TextScrollSpeed: .00999999978
+  AvatarMessage: {fileID: 8300000, guid: ff945faee76afc64692dac7a6368e1b1, type: 1}
+  AvatarText: []
+  mWindowGroup:
+    serializedVersion: 2
+    x: 0
+    y: 1
+    width: 0
+    height: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

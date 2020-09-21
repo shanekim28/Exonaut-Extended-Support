@@ -1,0 +1,271 @@
+; FBX 7.1.0 project file
+FBXHeaderExtension:  {
+	FBXHeaderVersion: 1003
+	FBXVersion: 7100
+	CreationTimeStamp:  {
+		Version: 1000
+		Year: 2020
+		Month: 9
+		Day: 20
+		Hour: 22
+		Minute: 23
+		Second: 16
+		Millisecond: 554
+	}
+	Creator: "Unity Studio by Chipicao"
+}
+
+GlobalSettings:  {
+	Version: 1000
+	Properties70:  {
+		P: "UpAxis", "int", "Integer", "",1
+		P: "UpAxisSign", "int", "Integer", "",1
+		P: "FrontAxis", "int", "Integer", "",2
+		P: "FrontAxisSign", "int", "Integer", "",1
+		P: "CoordAxis", "int", "Integer", "",0
+		P: "CoordAxisSign", "int", "Integer", "",1
+		P: "OriginalUpAxis", "int", "Integer", "",1
+		P: "OriginalUpAxisSign", "int", "Integer", "",1
+		P: "UnitScaleFactor", "double", "Number", "",2.54
+		P: "OriginalUnitScaleFactor", "double", "Number", "",1.0
+	}
+}
+
+Documents:  {
+	Count: 1
+	Document: 1234567890, "", "Scene" {
+		Properties70:  {
+			P: "SourceObject", "object", "", ""
+			P: "ActiveAnimStackName", "KString", "", "", ""
+		}
+		RootNode: 0
+	}
+}
+
+References:  {
+}
+
+Definitions:  {
+	Version: 100
+	Count: 17
+	ObjectType: "GlobalSettings" {
+		Count: 1
+	}
+	ObjectType: "Model" {
+		Count: 6
+	}
+	ObjectType: "NodeAttribute" {
+		Count: 6
+		PropertyTemplate: "FbxNull" {
+			Properties70:  {
+				P: "Color", "ColorRGB", "Color", "",0.8,0.8,0.8
+				P: "Size", "double", "Number", "",100
+				P: "Look", "enum", "", "",1
+			}
+		}
+	}
+	ObjectType: "Geometry" {
+		Count: 0
+	}
+	ObjectType: "Material" {
+		Count: 1
+	}
+	ObjectType: "Texture" {
+		Count: 1
+	}
+	ObjectType: "Video" {
+		Count: 1
+	}
+	ObjectType: "CollectionExclusive" {
+		Count: 0
+		PropertyTemplate: "FbxDisplayLayer" {
+			Properties70:  {
+				P: "Color", "ColorRGB", "Color", "",0.8,0.8,0.8
+				P: "Show", "bool", "", "",1
+				P: "Freeze", "bool", "", "",0
+				P: "LODBox", "bool", "", "",0
+			}
+		}
+	}
+	ObjectType: "Deformer" {
+		Count: 0
+	}
+	ObjectType: "Pose" {
+		Count: 1
+	}
+}
+
+Objects:  {
+	NodeAttribute: 2005, "NodeAttribute::", "Null" {
+		TypeFlags: "Null"
+	}
+	Model: 1005, "Model::ParticleEmitter", "Null" {
+		Version: 232
+		Properties70:  {
+			P: "InheritType", "enum", "", "",1
+			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
+			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Translation", "Lcl Translation", "", "A",0,-3,9
+			P: "Lcl Rotation", "Lcl Rotation", "", "A",0,0,0
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",1,0.09999998,0.09999998
+		}
+		Shading: T
+		Culling: "CullingOff"
+	}
+	NodeAttribute: 2006, "NodeAttribute::", "Null" {
+		TypeFlags: "Null"
+	}
+	Model: 1006, "Model::Directional light", "Null" {
+		Version: 232
+		Properties70:  {
+			P: "InheritType", "enum", "", "",1
+			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
+			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Translation", "Lcl Translation", "", "A",0,0,0
+			P: "Lcl Rotation", "Lcl Rotation", "", "A",-90.00003,-1.992241E-05,180
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",0.05,0.05000001,0.05000001
+		}
+		Shading: T
+		Culling: "CullingOff"
+	}
+	NodeAttribute: 2007, "NodeAttribute::", "Null" {
+		TypeFlags: "Null"
+	}
+	Model: 1007, "Model::Background", "Null" {
+		Version: 232
+		Properties70:  {
+			P: "InheritType", "enum", "", "",1
+			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
+			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Translation", "Lcl Translation", "", "A",0,0,0
+			P: "Lcl Rotation", "Lcl Rotation", "", "A",0,0,0
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",1,1,1
+		}
+		Shading: T
+		Culling: "CullingOff"
+	}
+	Model: 1008, "Model::Background", "Mesh" {
+		Version: 232
+		Properties70:  {
+			P: "InheritType", "enum", "", "",1
+			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
+			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Translation", "Lcl Translation", "", "A",0,0,80
+			P: "Lcl Rotation", "Lcl Rotation", "", "A",-89.99999,4.599009E-05,180
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",8,8,8
+		}
+		Shading: T
+		Culling: "CullingOff"
+	}
+	NodeAttribute: 2009, "NodeAttribute::", "Null" {
+		TypeFlags: "Null"
+	}
+	Model: 1009, "Model::battleQueue", "Null" {
+		Version: 232
+		Properties70:  {
+			P: "InheritType", "enum", "", "",1
+			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
+			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Translation", "Lcl Translation", "", "A",-0.004032396,-0.002667974,0
+			P: "Lcl Rotation", "Lcl Rotation", "", "A",0,0,0
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",0.9441421,0.944142,0.9441421
+		}
+		Shading: T
+		Culling: "CullingOff"
+	}
+	NodeAttribute: 2230, "NodeAttribute::", "Null" {
+		TypeFlags: "Null"
+	}
+	Model: 1230, "Model::QueueFirstUse", "Null" {
+		Version: 232
+		Properties70:  {
+			P: "InheritType", "enum", "", "",1
+			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
+			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Translation", "Lcl Translation", "", "A",4.673004E-05,1.000047,-1.781731
+			P: "Lcl Rotation", "Lcl Rotation", "", "A",0,0,0
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",1,1,1
+		}
+		Shading: T
+		Culling: "CullingOff"
+	}
+	Pose: 5123456789, "Pose::BIND_POSES", "BindPose" {
+		Type: "BindPose"
+		Version: 100
+		NbPoseNodes: 0
+	}
+	Material: 61004, "Material::MS_Background", "" {
+		Version: 102
+		ShadingModel: "phong"
+		MultiLayer: 0
+		Properties70:  {
+			P: "ShadingModel", "KString", "", "", "phong"
+			P: "DiffuseColor", "Color", "", "A",1,1,1
+		}
+	}
+	Texture: 71181, "Texture::MS_Background", "" {
+		Type: "TextureVideoClip"
+		Version: 202
+		TextureName: "Texture::MS_Background"
+		Properties70:  {
+			P: "UVSet", "KString", "", "", "UVChannel_0"
+			P: "UseMaterial", "bool", "", "",1
+		}
+		Media: "Video::MS_Background"
+		FileName: "C:\Users\Shane\Desktop\code\exonaut\exodumpbms\exonaut-0.9.3.6119.unity3d_unpacked\Texture2D\MS_Background #1181.dds"
+		RelativeFilename: "Texture2D\MS_Background #1181.dds"
+	}
+	Video: 81181, "Video::MS_Background", "Clip" {
+		Type: "Clip"
+		Properties70:  {
+			P: "Path", "KString", "XRefUrl", "", "C:\Users\Shane\Desktop\code\exonaut\exodumpbms\exonaut-0.9.3.6119.unity3d_unpacked\Texture2D\MS_Background #1181.dds"
+		}
+		FileName: "C:\Users\Shane\Desktop\code\exonaut\exodumpbms\exonaut-0.9.3.6119.unity3d_unpacked\Texture2D\MS_Background #1181.dds"
+		RelativeFilename: "Texture2D\MS_Background #1181.dds"
+	}
+}
+
+Connections:  {
+
+	;NodeAttribute::, Model::ParticleEmitter
+	C: "OO",2005,1005
+
+	;Model::ParticleEmitter, Model::Background
+	C: "OO",1005,1007
+
+	;NodeAttribute::, Model::Directional light
+	C: "OO",2006,1006
+
+	;Model::Directional light, Model::Background
+	C: "OO",1006,1008
+
+	;NodeAttribute::, Model::Background
+	C: "OO",2007,1007
+
+	;Model::Background, Model::RootNode
+	C: "OO",1007,0
+
+	;Model::Background, Model::Background
+	C: "OO",1008,1007
+
+	;NodeAttribute::, Model::battleQueue
+	C: "OO",2009,1009
+
+	;Model::battleQueue, Model::RootNode
+	C: "OO",1009,0
+
+	;NodeAttribute::, Model::QueueFirstUse
+	C: "OO",2230,1230
+
+	;Model::QueueFirstUse, Model::RootNode
+	C: "OO",1230,0
+
+	;Material::, Model::Background
+	C: "OO",61004,1008
+
+	;Texture::, Material::MS_Background
+	C: "OP",71181,61004, "DiffuseColor"
+
+	;Video::MS_Background, Texture::MS_Background
+	C: "OO",81181,71181
+}

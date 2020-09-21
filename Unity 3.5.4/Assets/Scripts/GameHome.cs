@@ -376,8 +376,8 @@ public class GameHome : MonoBehaviour {
 		ModelTransforms[3].GetComponent<Renderer>().material.mainTexture = mGeneratedBanner;
 		Quaternion rotation = Camera.main.transform.rotation;
 		Camera.main.transform.rotation = Quaternion.identity;
-		tabhome.ModelPositions[3] = Camera.main.ScreenToWorldPoint(new Vector3(screenSpace.x + FlagPositions[0] * screenSpace.width + 90f, screenSpace.height / 2f + screenSpace.y, 40f));
-		tabshowcase.mSuitInspector.ModelPositions[3] = Camera.main.ScreenToWorldPoint(new Vector3(screenSpace.x + FlagPositions[1] * screenSpace.width + 90f, screenSpace.height / 2f + screenSpace.y, 40f));
+		tabhome.ModelPositions[3] = Camera.main.ScreenToWorldPoint(new Vector3(screenSpace.x + FlagPositions[0] * screenSpace.width + 90f, screenSpace.height / 2f + screenSpace.y, 50f));
+		tabshowcase.mSuitInspector.ModelPositions[3] = Camera.main.ScreenToWorldPoint(new Vector3(screenSpace.x + FlagPositions[1] * screenSpace.width + 90f, screenSpace.height / 2f + screenSpace.y, 50f));
 		Camera.main.transform.rotation = rotation;
 	}
 
@@ -796,14 +796,6 @@ public class GameHome : MonoBehaviour {
 			Connect();
 		}
 		GUI.EndGroup();
-
-		// Temporary play button
-		if (GUI.Button(new Rect(Screen.width / 2, Screen.height / 2, 100, 100), "Play")) {
-			Debug.Log("Battle clicked");
-			curhover = "Battle";
-			battleType = 1;
-			m_networkManager.m_gameModeStr = GameMode.freeforall.ToString();
-		}
 
 		if (m_DrawHolidayEvent != null) {
 			m_DrawHolidayEvent();

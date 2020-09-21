@@ -18,7 +18,7 @@ public class NetworkManager : MonoBehaviour
 
 	private bool running;
 
-	private static string CN_INTERNAL = "10.189.49.72";
+	private static string CN_INTERNAL = "localhost";
 
 	private string zone = "Exonaut";
 
@@ -227,6 +227,10 @@ public class NetworkManager : MonoBehaviour
 			smartFox.ProcessEvents();
 		}
 	}
+
+	private void OnApplicationQuit() {
+		smartFox.Disconnect();
+    }
 
 	/// <summary>
 	/// Adds event listeners to handle CONNECTION, CONNECTION_LOST, LOGIN, LOGIN_ERROR, ROOM_JOIN, USER_ENTER_ROOM, USER_EXIT_ROOM, LOGOUT, EXTENSION_RESPONSE, USER_VARIABLES_UPDATE, ROOM_REMOVE, and ROOM_VARIABLES_UPDATE events
@@ -873,24 +877,15 @@ public class NetworkManager : MonoBehaviour
 		Debug.Log("[SFS DEBUG] " + str);
 	}
 
+	/// <summary>
+	/// Sends exension request to the server
+	/// </summary>
+	/// <param name="id">ID of request</param>
+	/// <param name="dataObject">Data to send</param>
 	public void sendClientRequest(RequestId id, SFSObject dataObject)
 	{
 		string extCmd = id.ToString();
 		smartFox.Send(new ExtensionRequest(extCmd, dataObject, smartFox.LastJoinedRoom));
-	}
-
-	private void doLogin()
-	{
-		GUI.Label(new Rect(10f, 180f, 100f, 100f), "Server: ");
-		serverName = GUI.TextField(new Rect(100f, 180f, 200f, 20f), serverName, 25);
-		GUI.Label(new Rect(10f, 210f, 100f, 100f), "Port: ");
-		serverPort = int.Parse(GUI.TextField(new Rect(100f, 210f, 200f, 20f), serverPort.ToString(), 4));
-		GUI.Label(new Rect(10f, 240f, 100f, 100f), loginErrorMessage);
-		if (GUI.Button(new Rect(100f, 270f, 100f, 24f), "Login") || (Event.current.type == EventType.KeyDown && Event.current.character == '\n'))
-		{
-			AddEventListeners();
-			smartFox.Connect(serverName, serverPort);
-		}
 	}
 
 	private void doJoinRoom()
@@ -902,14 +897,6 @@ public class NetworkManager : MonoBehaviour
 		m_state = null;
 	}
 
-	private void doInRoom()
-	{
-	}
-
-	public void sendPing()
-	{
-		sendPing(m_pinger);
-	}
 
 	public void sendPing(bool submit)
 	{
@@ -917,15 +904,6 @@ public class NetworkManager : MonoBehaviour
 		{
 			sendClientRequest(RequestId.ping, new SFSObject());
 		}
-	}
-
-	public void sendEventSpawnMe()
-	{
-		SFSObject sFSObject = new SFSObject();
-		Debug.Log("<< Sending : " + GameData.MyPlayerId);
-		sFSObject.PutInt("playerId", GameData.MyPlayerId);
-		sFSObject.PutInt("msgType", 40);
-		smartFox.Send(new ExtensionRequest("evt", sFSObject, GameData.GameRoom));
 	}
 
 	public void PassEventToPlayerObject(SFSObject data, int fromUser)

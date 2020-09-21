@@ -329,7 +329,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 2d801bdfd73a6724aa52af899de4f2d4, type: 1}
   mLevelText: {fileID: 2800000, guid: 85af909504c966446aa9d56b3309a1a0, type: 1}
   mGeneratedBanner: {fileID: 0}
-  mGeneratedBannerMat: {fileID: 0}
+  mGeneratedBannerMat: {fileID: 2100000, guid: e714f7b13f7ba354687cefb22c527afe, type: 2}
   mLevelTextSizes:
   - {x: 0, y: 0}
   - {x: 0, y: 0}
@@ -391,6 +391,9 @@ MonoBehaviour:
   TestVector: {x: 0, y: 0, z: 0}
   alpha: 0
   animmod: 34
+  curhover: 
+  lastHover2: 
+  curhover2: 
 --- !u!114 &1719272516
 MonoBehaviour:
   m_ObjectHideFlags: 0
